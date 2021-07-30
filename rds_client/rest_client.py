@@ -4,6 +4,10 @@ import json
 import logging
 import threading
 
+from resources.fields import RDListFields
+from resources.fields import RDInsertFieldCurrentAccount
+from resources.fields import RDUpdateFieldCurrentAccount
+from resources.fields import RDDeleteFieldCurrentAccount
 from resources.auth import RDGettingAcessToken
 from resources.auth import RDRevokingAcessToken
 from resources.auth import RDRefreshExpiredToken
@@ -16,11 +20,6 @@ from resources.contacts import RDUpsertContactIndentifier
 from resources.funnels import RDContactsUUIDDetails
 from resources.funnels import RDContactsEmailDetails
 from resources.funnels import RDUpdateContactsDetails
-from resources.fields import RDListFields
-from resources.fields import RDInsertFieldCurrentAccount
-from resources.fields import RDUpdateFieldCurrentAccount
-from resources.fields import RDDeleteFieldCurrentAccount
-
 
 from resources.leads import RDLead
 from resources.webhook import RDWebhook
@@ -44,10 +43,6 @@ from exceptions import RDReadOnlyFieldsException
 from exceptions import RDInexistentFields
 from exceptions import RDConflictingField
 from exceptions import RDEmailAlreadyInUse
-
-
-# API CLIENT
-
 
 class RDSWebsocketClient():
 	"""
@@ -126,9 +121,9 @@ class RDStationRestClient():
 
 		self.api_key = api_key
 		self._client = RDStationClient(**kwargs)
-		self._endpoint =
-		self._wss_url = "wss://{host}/echo/websocket".format(host=host)
 		self._websocket_client = None
+		self._endpoint = kwargs.get('endpoint', settings.RDSTATION['endpoints']['base_domain'])
+		self._wss_url = kwargs.get('socket', settings.RDSTATION['endpoints']['socket'])
 		self.headers = kwargs.get('headers', settings.RDSTATION['default_headers'])
 				
 	def login(self):
