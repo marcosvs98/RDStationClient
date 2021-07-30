@@ -1,12 +1,14 @@
 
 
 RDSTATION = {
-    # https://developers.rdstation.com/en/request-limit
-	
+	# https://developers.rdstation.com/en/reference/webhooks#webhooks-retries
 	"endpoints": {
 		"base_domain": "https://api.rd.services",
-		"socket": "wss://api.rd.services/echo/websocket"
+		"socket": "wss://api.rd.services/echo/websocket",
+		"max_retries": 5,
+		"time_sleep": 10
 	},
+	# https://developers.rdstation.com/en/request-limit
     "contacts": {
         "max_requests": 24,
         "period": 24,

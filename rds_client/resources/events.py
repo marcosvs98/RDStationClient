@@ -2,10 +2,11 @@ from resources.resource import RDStationResource
 
 class RDConversionEvent(RDStationResource):
 	"""
-	RD Station Marketing considers the value of the
-	conversion_identifier attribute as the conversion identifier.
-	This event is recorded whenever a conversion occurs.
+	The event's endpoint is responsible for receiving different event
+	types in which RD Station Contacts take part in.
 	"""
+	path = "/".join((RDFieldsResource.path, "plataform", "events"))
+
 	def __call__(self):
 
 		data = {

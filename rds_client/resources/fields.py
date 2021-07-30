@@ -6,7 +6,7 @@ class RDFieldsResource(ABC, RDStationResource):
 	"""
 	Classe responsável por implementar o recurso de api ´Fields´.
 	"""
-	path = 'contacts'
+	path = 'platoform'
 
 	@abstractmethod
 	def __call__(self):
@@ -23,7 +23,7 @@ class RDListFields(RDFieldsResource):
 
 	ref: https://developers.rdstation.com/en/reference/fields
 	"""
-	path = "/".join((RDMarketingResource.path, "fields"))
+	path = "/".join((RDFieldsResource.path, "contacts"))
 
 	def __call__(self, **kwargs):
 		"""
@@ -90,19 +90,21 @@ class RDListFields(RDFieldsResource):
 		  ]
 		}
 		"""
+		RDListFields.path = "/".join((RDFieldsResource.path, "fields"))
+
 		return self._get(self, **kwargs)
 
 	def _get(self, **kwargs):
 		return self.send_response("GET", **kwargs)
 
 
-class RDInsertFieldCurrentAccount(RDMarketingResource):
+class RDInsertFieldCurrentAccount(RDFieldsResource):
 	"""
 	Creates a Field for the current account.
 	ref: https://developers.rdstation.com/en/reference/fields#methodGetDetails
 	"""
 
-	path = "/".join((RDMarketingResource.path, "fields"))
+	path = "/".join((RDFieldsResource.path, "contacts"))
 
 	def __call__(self, fields, **kwargs):
 		"""
@@ -140,20 +142,21 @@ class RDInsertFieldCurrentAccount(RDMarketingResource):
  		 "uuid": "fdeba6ec-f1cf-4b13-b2ea-e93d47c0d828"
 		}
 		"""
-
+		RDInsertFieldCurrentAccount.path = \
+			"/".join((RDInsertFieldCurrentAccount.path, "fields")
 		return self._post(self, fields, **kwargs)
 
 	def _post(self, data, **kwargs):
 		return self.send_response("POST", data=fields, **kwargs)
 
 
-class RDUpdateFieldCurrentAccount(RDMarketingResource):
+class RDUpdateFieldCurrentAccount(RDFieldsResource):
 	"""
 	Updates a Field for the current account. It supports partial updates.
 	ref: https://developers.rdstation.com/en/reference/fields#methodGetDetails
 	"""
 
-	path = "/".join((RDMarketingResource.path, "fields"))
+	path = "/".join((RDFieldsResource.path, "contacts"))
 
 	def __call__(self, uuid, **kwargs):
 		"""
@@ -194,21 +197,22 @@ class RDUpdateFieldCurrentAccount(RDMarketingResource):
 		:return: json response * No response body
         {}
 		"""
-		RDContactsUUID.path = "/".join((RDAuthentication.path, f"{uuid}"))
+		RDUpdateFieldCurrentAccount.path = \
+			"/".join((RDUpdateFieldCurrentAccount.path, "fields", uuid)
 
-		return self._put(self, fields, **kwargs)
+		return self._patch(self, fields, **kwargs)
 
-	def _put(self, data, **kwargs):
-		return self.send_response("PUT", data=fields, **kwargs)
+	def _patch(self, data, **kwargs):
+		return self.send_response("PATCH", data=fields, **kwargs)
 
 
-class RDDeleteFieldCurrentAccount(RDMarketingResource):
+class RDDeleteFieldCurrentAccount(RDFieldsResource):
 	"""
 	Deletes a Field from the current account.
 	ref: https://developers.rdstation.com/en/reference/fields#methodGetDetails
 	"""
 
-	path = "/".join((RDMarketingResource.path, "fields"))
+	path = "/".join((RDFieldsResource.path, "fields"))
 
 	def __call__(self, uuid, **kwargs):
 		"""
@@ -217,7 +221,8 @@ class RDDeleteFieldCurrentAccount(RDMarketingResource):
 		response:
 		Success / Code: 204
 		"""
-		RDContactsUUID.path = "/".join((RDAuthentication.path, f"{uuid}"))
+		RDDeleteFieldCurrentAccount.path = \
+			"/".join((RDDeleteFieldCurrentAccount.path, f"{uuid}"))
 
 		return self._delete(self, **kwargs)
 

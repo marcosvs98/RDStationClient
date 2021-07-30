@@ -150,10 +150,10 @@ class RDUpdateContactPerUUID(RDStationResource):
 		# set email
 		RDContactsUUID.path = "/".join((RDAuthentication.path, uuid))
 
-		return self._path(self, **kwargs)
+		return self._patch(self, **kwargs)
 
-	def _path(self, **kwargs):
-		return self.send_response("GET", **kwargs)
+	def _patch(self, **kwargs):
+		return self.send_response("PATCH", **kwargs)
 
 
 class RDUpsertContactIndentifier(RDStationResource):
@@ -198,10 +198,10 @@ class RDUpsertContactIndentifier(RDStationResource):
 		# set email
 		RDContactsUUID.path = "/".join((RDAuthentication.path, f"{identifier}:{value}"))
 
-		return self._path(self, **kwargs)
+		return self._pach(self, **kwargs)
 
-	def _path(self, **kwargs):
-		return self.send_response("GET", **kwargs)
+	def _patch(self, **kwargs):
+		return self.send_response("PATCH", **kwargs)
 
 
 # end-of-file

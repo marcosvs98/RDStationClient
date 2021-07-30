@@ -54,7 +54,7 @@ class RDMarketingTrackingCode(RDMarketingResource):
 		:param kwargs: type: dict args
 		:return: json response
 		{
-			"path": "https://d335luupugsy2.cloudfront.net/js/loader-scripts/8d2892c6-e22c-2c2d-b15a-36916776e5e7-loader.js"
+		   "path": "https://d335luupugsy2.cloudfront.net/js/loader-scripts/8d2892c6-b15a-36916776e5e7-loader.js"
 		}
 		"""
 		return self._get(self, **kwargs)

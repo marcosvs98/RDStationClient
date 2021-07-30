@@ -6,7 +6,7 @@ ref: https://developers.rdstation.com/en/reference/contacts/funnels
 """
 
 
-class RDContactsResource(RDStationResource):
+class RDFunnelsResource(RDStationResource):
 	"""
 	The main object of the RD Station API is the Contact and, in order to be able to manage
 	the Contacts information in an RD Station account, we provide some endpoints that bring
@@ -21,13 +21,13 @@ class RDContactsResource(RDStationResource):
 		pass
 
 
-class RDContactsUUIDDetails(RDStationResource):
+class RDContactsUUIDDetails(RDFunnelsResource):
 	"""
 	Returns a list of Funnels associated to the given contact.
 
 	https://developers.rdstation.com/en/reference/contacts/funnels#methodGetByUuidDetails
 	"""
-	url = "/".join((RDAuthentication.url, "plataform", "contacts"))
+	path = "/".join((RDFunnelsResource.url, "contacts"))
 
 	def __call__(self, uuid, funnel_name, **kwargs):
 		"""
@@ -44,8 +44,8 @@ class RDContactsUUIDDetails(RDStationResource):
 		}
 		"""
 		# set uuid
-		RDContactsUUID.url = "/".join(
-			(RDAuthentication.url, uuid, 'funnels', funnel_name)
+		RDContactsUUIDDetails.url = "/".join(
+			(RDContactsUUIDDetails.url, uuid, 'funnels', funnel_name)
 		)
 		return self._get(self, **kwargs)
 
@@ -53,13 +53,13 @@ class RDContactsUUIDDetails(RDStationResource):
 		return self.send_response("GET", **kwargs)
 
 
-class RDContactsEmailDetails(RDStationResource):
+class RDContactsEmailDetails(RDFunnelsResource):
 	"""
 	Returns a list of Funnels associated to the given contact.
 
 	https://developers.rdstation.com/en/reference/contacts/funnels#methodGetByUuidDetails
 	"""
-	url = "/".join((RDAuthentication.url, "plataform", "contacts"))
+	path = "/".join((RDFunnelsResource.url, "contacts"))
 
 	def __call__(self, contact_email, funnel_name, **kwargs):
 		"""
@@ -76,8 +76,8 @@ class RDContactsEmailDetails(RDStationResource):
 		}
 		"""
 		# set uuid
-		RDContactsUUID.url = "/".join(
-			(RDAuthentication.url, f'email:{contact_email}', 'funnels', funnel_name)
+		RDContactsEmailDetails.url = "/".join(
+			(RDContactsEmailDetails.url, f'email:{contact_email}', 'funnels', funnel_name)
 		)
 		return self._get(self, **kwargs)
 
@@ -85,13 +85,13 @@ class RDContactsEmailDetails(RDStationResource):
 		return self.send_response("GET", **kwargs)
 
 
-class RDUpdateContactsDetails(RDStationResource):
+class RDUpdateContactsDetails(RDFunnelsResource):
 	"""
 	Updates the funnel information about the current contact.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	url = "/".join((RDAuthentication.url, "plataform", "contacts"))
+	path = "/".join((RDFunnelsResource.url, "contacts"))
 
 	def __call__(self, lifecycle_stage, opportunity,  contact_owner_email, **kwargs):
 		"""
@@ -111,8 +111,8 @@ class RDUpdateContactsDetails(RDStationResource):
 		}
 		"""
 		# set email
-		RDContactsUUID.url = "/".join(
-			(RDAuthentication.url, uuid, f"|email:{contact_owner_email}", "funnels", funnel_name)
+		RDUpdateContactsDetails.url = "/".join(
+			(RDUpdateContactsDetails.url, uuid, f"|email:{contact_owner_email}", "funnels", funnel_name)
 		)
 		data = {
 		    "lifecycle_stage": lifecycle_stage,
