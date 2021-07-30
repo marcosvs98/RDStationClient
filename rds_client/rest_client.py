@@ -4,27 +4,26 @@ import json
 import logging
 import threading
 
+from resources.auth import RDGettingAcessToken
+from resources.auth import RDRevokingAcessToken
+from resources.auth import RDRefreshExpiredToken
+from resources.contacts import RDContactsUUID
+from resources.contacts import RDContactsEmail
 from resources.fields import RDListFields
 from resources.fields import RDInsertFieldCurrentAccount
 from resources.fields import RDUpdateFieldCurrentAccount
 from resources.fields import RDDeleteFieldCurrentAccount
-from resources.auth import RDGettingAcessToken
-from resources.auth import RDRevokingAcessToken
-from resources.auth import RDRefreshExpiredToken
-from resources.marketing import RDMarketingAccountInfo
-from resources.marketing import RDMarketingTrackingCode
-from resources.contacts import RDContactsUUID
-from resources.contacts import RDContactsEmail
+from resources.webhook import RDWebhooksFactory
+from resources.webhook import RDDWebhooksReceiver
+from resources.webhook import RDUpdateWebhookPerUUID
+from resources.webhook import RDDeleteWebhookPerUUID
 from resources.contacts import RDUpdateContactPerUUID
 from resources.contacts import RDUpsertContactIndentifier
+from resources.marketing import RDMarketingAccountInfo
+from resources.marketing import RDMarketingTrackingCode
 from resources.funnels import RDContactsUUIDDetails
 from resources.funnels import RDContactsEmailDetails
 from resources.funnels import RDUpdateContactsDetails
-
-from resources.leads import RDLead
-from resources.webhook import RDWebhook
-from resources.callback import RDURLCallback
-from resources.conversion_event import RDConversionEvent
 
 from exceptions import RDStationException
 from exceptions import RDUserIsNotExists
@@ -44,21 +43,23 @@ from exceptions import RDInexistentFields
 from exceptions import RDConflictingField
 from exceptions import RDEmailAlreadyInUse
 
+
 class RDSWebsocketClient():
 	"""
 	Classe responsável pela implementação de um cliente RDStation
 	ref: https://developers.rdstation.com/en/overview
 	"""
-	def __init__(self, api):
+	def __init__(self, client):
 		"""
 		:param api: The instance of :class:`RDStationRestClient
             <rds.api.RDStationRestClient>`.
 		"""
-		self.api = api
+		self.client = client
 		self.wss = websocket.WebSocketApp(
-			self.api.wss_url, on_message=self.on_message,
+			self.client.wss_url, on_message=self.on_message,
 			on_error=self.on_error, on_close=self.on_close,
-			on_open=self.on_open)
+			on_open=self.on_open
+		)
 
 	def on_message(self, message):
 		"""

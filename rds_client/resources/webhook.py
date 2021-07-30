@@ -27,7 +27,7 @@ class RDDWebhooksReceiver(RDWebhooksResource):
 
 	ref: https://developers.rdstation.com/en/reference/webhooks
 	"""
-	path = "/".join((RDAuthentication.path, "webhooks"))
+	path = "/".join((RDWebhooksResource.path, "webhooks"))
 
 	def __call__(self, **kwargs):
 		"""
@@ -68,7 +68,7 @@ class RDWebhooksFactory(RDWebhooksResource):
 
 	ref: https://developers.rdstation.com/en/reference/webhooks
 	"""
-	path = "/".join((RDAuthentication.path, "webhooks"))
+	path = "/".join((RDWebhooksResource.path, "webhooks"))
 
 	def __call__(self, webhook, **kwargs):
 		"""
@@ -95,7 +95,7 @@ class RDWebhooksFactory(RDWebhooksResource):
 		}
 		"""
 		# set email
-		RDContactsUUID.url = "/".join((RDAuthentication.url, f'email:{email}'))
+		RDWebhooksFactory.path = "/".join((RDWebhooksFactory.url, f'email:{email}'))
 
 		return self._post(self, webhook, **kwargs)
 
@@ -103,13 +103,13 @@ class RDWebhooksFactory(RDWebhooksResource):
 		return self.send_response("POST", data=data, **kwargs)
 
 
-class RDUpdateWebhookPerUUID(RDStationResource):
+class RDUpdateWebhookPerUUID(RDWebhooksResource):
 	"""
 	It updates a webhook subscription.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	path = "/".join((RDAuthentication.path, "plataform", "contacts"))
+	path = "/".join((RDWebhooksResource.path, "webhooks"))
 
 	def __call__(self, uuid, body, **kwargs):
 		"""
@@ -140,60 +140,37 @@ class RDUpdateWebhookPerUUID(RDStationResource):
 		  ]
 		}
 		"""
-		# set email
-		RDContactsUUID.path = "/".join((RDAuthentication.path, uuid))
+		# set uiid to path
+		RDUpdateWebhookPerUUID.path = "/".join((RDUpdateWebhookPerUUID.path, uuid))
 
-		return self._path(self, **kwargs)
+		return self._put(self, body, **kwargs)
 
-	def _path(self, **kwargs):
-		return self.send_response("GET", **kwargs)
+	def _put(self, data, **kwargs):
+		return self.send_response("GET", datra=data, **kwargs)
 
 
-class RDUpsertContactIndentifier(RDStationResource):
+class RDDeleteWebhookPerUUID(RDStationResource):
 	"""
-	Updates the properties of a Contact per UIID.
+	It updates a webhook subscription.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	path = "/".join((RDAuthentication.path, "plataform", "contacts"))
+	path = "/".join((RDStationResource.path, "webhooks"))
 
-	def __call__(self, identifier, value, **kwargs):
+	def __call__(self, uuid, **kwargs):
 		"""
-		:identifier : type: string : The api_identifier of the Contact Field that uniquely identifies the Lead.
-		                             Currently only email or uuid are supported.
-		:value: type: string : The value for the given identifier
-		                             e.g. contact@example.org or 5408c5a3-4711-4f2e-8d0b-13407a3e30f3.
+		:uuid : type: string : The unique uuid associated to each RD Station Contact.
 		:param kwargs: type: dict args
 		:return: json response
-		{
-		  "name": "RD Station Developer",
-		  "email": "contact@example.com",
-		  "job_title": "Developer",
-		  "bio": "This documentation explains the RD Station API.",
-		  "website": "https://developers.rdstation.com/",
-		  "linkedin": "rd_station",
-		  "personal_phone": "+55 48 3037-3600",
-		  "city": "Florianópolis",
-		  "state": "SC",
-		  "country": "Brasil",
-		  "tags": ["developer", "rdstation", "api"],
-		  "extra_emails": ["contact2@example.com"],
-		  "cf_custom_field_2": "custom field value2",
-		  "legal_bases": [
-			{
-			  "category": "communications",
-			  "type": "consent",
-			  "status": "granted"
-			}
-		  ]
-		}
+		Response examples:
+		Success | Code: 204
 		"""
-		# set email
-		RDContactsUUID.path = "/".join((RDAuthentication.path, f"{identifier}:{value}"))
+		# set uiid to path
+		RDDeleteWebhookPerUUID.path = "/".join((RDDeleteWebhookPerUUID.path, uuid))
 
-		return self._path(self, **kwargs)
+		return self._delete(self, **kwargs)
 
-	def _path(self, **kwargs):
-		return self.send_response("GET", **kwargs)
+	def _detlete(self, data, **kwargs):
+		return self.send_response("DELETE", **kwargs)
 
 # end-of-file
