@@ -1,4 +1,4 @@
-RDSTATION_REQUEST_LIMIT = {
+RDSTATION = {
     # https://developers.rdstation.com/en/request-limit
 	
 	"endpoints": {
@@ -29,7 +29,8 @@ RDSTATION_REQUEST_LIMIT = {
         }
     },
 	"default_headers":{
-		"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36"
+		"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.139 Safari/537.36",
+		'Content-Type': 'application/json'
 	}
 }
 
