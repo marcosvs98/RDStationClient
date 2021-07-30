@@ -13,6 +13,13 @@ from resources.contacts import RDContactsUUID
 from resources.contacts import RDContactsEmail
 from resources.contacts import RDUpdateContactPerUUID
 from resources.contacts import RDUpsertContactIndentifier
+from resources.funnels import RDContactsUUIDDetails
+from resources.funnels import RDContactsEmailDetails
+from resources.funnels import RDUpdateContactsDetails
+from resources.fields import RDListFields
+from resources.fields import RDInsertFieldCurrentAccount
+from resources.fields import RDUpdateFieldCurrentAccount
+from resources.fields import RDDeleteFieldCurrentAccount
 
 
 from resources.leads import RDLead
@@ -279,8 +286,6 @@ class RDStationRestClient():
 		"""
 		return RDContactsEmail(self)
 
-	# https://developers.rdstation.com/en/reference/contacts/funnels
-
 	def update_contacts_by_uuid(self):
 		"""
 		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
@@ -296,6 +301,32 @@ class RDStationRestClient():
 		<restservice.resources.appinit.Appinit>`.
 		"""
 		return RDUpsertContactIndentifier(self, indentifier, value)
+
+	# https://developers.rdstation.com/en/reference/contacts/funnels
+
+	def get_contacts_by_uuid_funnel(self, uuid):
+		"""
+		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<restservice.resources.appinit.Appinit>`.
+		"""
+		return RDContactsUUIDDetails(self)
+
+	def get_contacts_by_email_funnel(self, email):
+		"""
+		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<restservice.resources.appinit.Appinit>`.
+		"""
+		return RDContactsEmailDetails(self, email)
+
+	def update_contact_by_indetifier_funnel(self, indentifier, **kwargs):
+		"""
+		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<restservice.resources.appinit.Appinit>`.
+		"""
+		return RDUpdateContactsDetails(self, identifier, **kwargs)
 
 	# https://developers.rdstation.com/en/reference/fields
 
@@ -387,6 +418,5 @@ class RDStationRestClient():
 		<restservice.resources.appinit.Appinit>`.
 		"""
 		pass
-
 
 # end-of-file

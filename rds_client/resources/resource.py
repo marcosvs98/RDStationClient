@@ -15,4 +15,5 @@ class RDStationResource(ABC):
 	def send_request(self, method, *args, **kwargs):
 		return self.client.send_request(self, method, *args, **kwargs)
 
+
 # end-of-file

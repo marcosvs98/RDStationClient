@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 from resources.resource import RDStationResource
 
+"""
+ref: https://developers.rdstation.com/en/reference/contacts
+"""
 
 class RDContactsResource(RDStationResource):
 	"""
@@ -199,7 +202,6 @@ class RDUpsertContactIndentifier(RDStationResource):
 
 	def _path(self, **kwargs):
 		return self.send_response("GET", **kwargs)
-
 
 
 # end-of-file
