@@ -191,6 +191,7 @@ class RDChatFinishedEvent(RDBodyEvent):
 
 @dataclass
 class RDCallFinishedEvent(RDBodyEvent):
+	
 	event_tye : str  # req: true
 	event_family 	: str  # req: true
 	name 	: str  # req: false
