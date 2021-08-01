@@ -191,7 +191,7 @@ class RDChatFinishedEvent(RDBodyEvent):
 
 @dataclass
 class RDCallFinishedEvent(RDBodyEvent):
-	
+	"""  """
 	event_tye : str  # req: true
 	event_family 	: str  # req: true
 	name 	: str  # req: false
@@ -279,11 +279,10 @@ class RDMediaPlaybackStoppedEvent(RDBodyEvent):
 
 @dataclass
 class RDEventsBatch(RDBodyEvent):
-	"""
-	The events batch endpoint allows RD Station to receive more than
+	""" The events batch endpoint allows RD Station to receive more than
 	one event at once. Thus allowing events of order placed and order placed
-	items to be sent without the need of multiple requests.
-	"""
+	items to be sent without the need of multiple requests. """
+
 	event_tye : str  # req: true
 	event_family 	: str  # req: true
 	payload 	: object  # req: true
