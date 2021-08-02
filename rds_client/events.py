@@ -6,12 +6,11 @@ event types, for instance, chat events, e-commerce ones and others.
 
 ref: https://developers.rdstation.com/en/reference/events
 """
+# pylint: disable=unused-import
+# pylint: disable=R0902
 
 from abc import ABC
-from dataclasses import dataclass
-
-
-# pylint: disable=R0902
+from dataclasses import dataclass, field
 
 
 @dataclass
@@ -56,33 +55,33 @@ class RDConversionEvent(RDRequestBody):
 	def __init__(self):
 		super(RDConversionEvent).__init__()
 
-	event_type: str  # req
-	event_family: str  # req
-	conversion_identifier: str  # req
-	name: str
+	event_type: str
+	event_family: str
+	conversion_identifier: str
+	name: str = field(default=None)
 	email: str  # req
-	job_title: str
-	state: str
-	city: str
-	country: str
-	personal_phone: str
-	mobile_phone: str
-	twitter: str
-	facebook: str
-	linkedin: str
-	website: str
-	cf_custom_field_api_identifier: str
-	company_name: str
-	company_site: str
-	company_address: str
-	client_tracking_id: str
-	traffic_source: str
-	traffic_medium: str
-	traffic_campaign: str
-	traffic_value: str
-	tags: list
-	available_for_mailing: bool
-	legal_bases: list
+	job_title: str = field(default=None)
+	state: str = field(default=None)
+	city: str = field(default=None)
+	country: str = field(default=None)
+	personal_phone: str = field(default=None)
+	mobile_phone: str = field(default=None)
+	twitter: str = field(default=None)
+	facebook: str = field(default=None)
+	linkedin: str = field(default=None)
+	website: str = field(default=None)
+	cf_custom_field_api_identifier: str = field(default=None)
+	company_name: str = field(default=None)
+	company_site: str = field(default=None)
+	company_address: str = field(default=None)
+	client_tracking_id: str = field(default=None)
+	traffic_source: str = field(default=None)
+	traffic_medium: str = field(default=None)
+	traffic_campaign: str = field(default=None)
+	traffic_value: str = field(default=None)
+	tags: list = field(default=[])
+	available_for_mailing: bool = field(default=False)
+	legal_bases: list = field(default=[])
 
 
 
@@ -98,7 +97,7 @@ class RDMarkOpportunityEvent(RDRequestBody):
 	event_family: str  # req: true
 	funnel_name: str  # req: true
 	email: str  # req: true
-	value: float  # req: false
+	value: float = field(default=None)
 
 
 @dataclass
@@ -113,7 +112,7 @@ class RDMarkOpportunityLostEvent(RDRequestBody):
 	event_family: str  # req: true
 	email: str  # req: true
 	funnel_name: str  # req: true
-	reason: str  # req: false
+	reason: str = field(default=None)
 
 
 @dataclass
@@ -128,14 +127,14 @@ class RDPlacedOrderEvent(RDRequestBody):
 
 	event_tye: str  # req: true
 	event_family: str  # req: true
-	name: str  # req: false
+	name: str = field(default=None)
 	email: str  # req: true
 	cf_order_id: str  # req: true
 	cf_order_total_items: int  # req: true
 	cf_order_status: str  # req: true
 	cf_order_payment_method: str  # req: true
 	cf_order_payment_amount: float  # req: true
-	legal_bases: list  # req: false
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -150,12 +149,12 @@ class RDPlacedOrderEventWithItem(RDRequestBody):
 
 	event_tye: str  # req: true
 	event_family: str  # req: true
-	name: str  # req: false
+	name: str = field(default=None)
 	email: str  # req: true
 	cf_order_id: str  # req: true
 	cf_order_product_id: str  # req: true
 	cf_order_product_sku: str  # req: true
-	legal_bases: list  # req: false
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -170,12 +169,12 @@ class RDAbandonedCartEvent(RDRequestBody):
 
 	event_tye: str  # req: true
 	event_family: str  # req: true
-	name: str  # req: false
+	name: str = field(default=None)
 	email: str  # req: true
 	cf_cart_id: str  # req: true
 	cf_cart_total_items: int  # req: true
 	cf_cart_status: str  # req: true
-	legal_bases: list  # req: false
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -190,12 +189,12 @@ class RDAbandonedCartEventWithItem(RDRequestBody):
 
 	event_tye: str  # req: true
 	event_family: str  # req: true
-	name: str  # req: false
+	name: str = field(default=None)
 	email: str  # req: true
 	cf_cart_id: str  # req: true
 	cf_cart_total_items: int  # req: true
 	cf_cart_status: str  # req: true
-	legal_bases: list  # req: false
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -211,21 +210,21 @@ class RDChatStartedEvent(RDRequestBody):
 	event_family: str  # req: true
 	chat_subject: str  # req: true
 	cf_chat_status: str  # req: true
-	cf_chat_type: str  # req: false
-	cf_birthdate: str  # req: false
-	cf_gender: str  # req: false
-	name: str  # req: false
+	cf_chat_type: str = field(default=None)
+	cf_birthdate: str = field(default=None)
+	cf_gender: str = field(default=None)
+	name: str = field(default=None)
 	email: str  # req: true
-	job_title: str  # req: false
-	personal_phone: str  # req: false
-	mobile_phone: str  # req: false
-	twitter: str  # req: false
-	facebook: str  # req: false
-	linkedin: str  # req: false
-	website: str  # req: false
-	company_name: str  # req: false
-	company_site: str  # req: false
-	legal_bases: list  # req: false
+	job_title: str = field(default=None)
+	personal_phone: str = field(default=None)
+	mobile_phone: str = field(default=None)
+	twitter: str = field(default=None)
+	facebook: str = field(default=None)
+	linkedin: str = field(default=None)
+	website: str = field(default=None)
+	company_name: str = field(default=None)
+	company_site: str = field(default=None)
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -242,21 +241,21 @@ class RDChatFinishedEvent(RDRequestBody):
 	chat_subject: str  # req: true
 	cf_chat_status: str  # req: true
 	cf_chat_transcript_message: str  # req: true
-	cf_chat_type: str  # req: false
-	cf_birthdate: str  # req: false
-	cf_gender: str  # req: false
-	name: str  # req: false
+	cf_chat_type: str = field(default=None)
+	cf_birthdate: str = field(default=None)
+	cf_gender: str = field(default=None)
+	name: str = field(default=None)
 	email: str  # req: true
-	job_title: str  # req: false
-	personal_phone: str  # req: false
-	mobile_phone: str  # req: false
-	twitter: str  # req: false
-	facebook: str  # req: false
-	linkedin: str  # req: false
-	website: str  # req: false
-	company_name: str  # req: false
-	company_site: str  # req: false
-	legal_bases: list  # req: false
+	job_title: str = field(default=None)
+	personal_phone: str = field(default=None)
+	mobile_phone: str = field(default=None)
+	twitter: str = field(default=None)
+	facebook: str = field(default=None)
+	linkedin: str = field(default=None)
+	website: str = field(default=None)
+	company_name: str = field(default=None)
+	company_site: str = field(default=None)
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -270,23 +269,23 @@ class RDCallFinishedEvent(RDRequestBody):
 
 	event_tye: str  # req: true
 	event_family: str  # req: true
-	name: str  # req: false
+	name: str = field(default=None)
 	email: str  # req: true
-	company_name: str  # req: false
-	company_site: str  # req: false
-	job_title: str  # req: false
-	personal_phone: str  # req: false
-	call_user_email: str  # req: false
+	company_name: str = field(default=None)
+	company_site: str = field(default=None)
+	job_title: str = field(default=None)
+	personal_phone: str = field(default=None)
+	call_user_email: str = field(default=None)
 	call_from_number: str  # req: true
-	call_started_at: int  # req: false
-	call_duration: str  # req: false
-	call_type: str  # req: false
+	call_started_at: int = field(default=0)
+	call_duration: str = field(default=None)
+	call_type: str = field(default=None)
 	call_status: str  # req: true
-	call_status_description: str  # req: false
-	call_phone_type: str  # req: false
-	call_carrier: str  # req: false
-	call_record: str  # req: false
-	legal_bases: list  # req: false
+	call_status_description: str = field(default=None)
+	call_phone_type: str = field(default=None)
+	call_carrier: str = field(default=None)
+	call_record: str = field(default=None)
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -301,24 +300,24 @@ class RDMediaEvents(RDRequestBody):
 	event_tye: str  # req: true
 	event_family: str  # req: true
 	email: str  # req: true
-	name: str  # req: false
-	company_name: str  # req: false
-	company_site: str  # req: false
-	job_title: str  # req: false
-	personal_phone: str  # req: false
-	mobile_phone: str  # req: false
-	twitter: str  # req: false
-	facebook: str  # req: false
-	linkedin: str  # req: false
-	website: str  # req: false
+	name: str = field(default=None)
+	company_name: str = field(default=None)
+	company_site: str = field(default=None)
+	job_title: str = field(default=None)
+	personal_phone: str = field(default=None)
+	mobile_phone: str = field(default=None)
+	twitter: str = field(default=None)
+	facebook: str = field(default=None)
+	linkedin: str = field(default=None)
+	website: str = field(default=None)
 	media_type: str  # req: true
-	media_metadata: str  # req: false
-	media_recorded_content: bool  # req: false
+	media_metadata: str = field(default=None)
+	media_recorded_content: bool = field(default=False)
 	media_identifier: str  # req: true
-	media_category: str  # req: false
-	media_duration: int  # req: false
-	media_published_date_timestamp: int  # req: false
-	legal_bases: list  # req: false
+	media_category: str = field(default=None)
+	media_duration: int = field(default=0)
+	media_published_date_timestamp: int = field(default=0)
+	legal_bases: list = field(default=[])
 
 
 @dataclass
@@ -333,28 +332,28 @@ class RDMediaPlaybackStoppedEvent(RDRequestBody):
 	event_tye: str  # req: true
 	event_family: str  # req: true
 	email: str  # req: true
-	name: str  # req: false
-	company_name: str  # req: false
-	company_site: str  # req: false
-	job_title: str  # req: false
-	personal_phone: str  # req: false
-	mobile_phone: str  # req: false
-	twitter: str  # req: false
-	facebook: str  # req: false
-	linkedin: str  # req: false
-	website: str  # req: false
+	name: str = field(default=None)
+	company_name: str = field(default=None)
+	company_site: str = field(default=None)
+	job_title: str = field(default=None)
+	personal_phone: str = field(default=None)
+	mobile_phone: str = field(default=None)
+	twitter: str = field(default=None)
+	facebook: str = field(default=None)
+	linkedin: str = field(default=None)
+	website: str = field(default=None)
 	media_type: str  # req: true
-	media_metadata: str  # req: false
-	media_recorded_content: bool  # req: false
+	media_metadata: str = field(default=None)
+	media_recorded_content: bool = field(default=False)
 	media_identifier: str  # req: true
-	media_category: str  # req: false
-	media_duration: int  # req: false
-	media_published_date_timestamp: int  # req: false
-	media_finished: bool  # req: false
-	media_user_interaction_duration: int  # req: false
-	media_user_interaction_percentage: int  # req: false
-	media_user_interaction_date_timestamp: str  # req: false
-	legal_bases: list  # req: false
+	media_category: str = field(default=None)
+	media_duration: int = field(default=0)
+	media_published_date_timestamp: int = field(default=0)
+	media_finished: bool = field(default=False)
+	media_user_interaction_duration: int = field(default=0)
+	media_user_interaction_percentage: int = field(default=0)
+	media_user_interaction_date_timestamp: str = field(default=None)
+	legal_bases: list = field(default=[])
 
 
 @dataclass
