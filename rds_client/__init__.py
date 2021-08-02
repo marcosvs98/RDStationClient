@@ -21,6 +21,12 @@ class RDSJsonResponse():
 				self.response_errors.append(
 					(status_code, r['error_type'], int(rd_code), message))
 
+		post_data = {}
+		for data in self.post_data.split("&"):
+			key, value = data.split('=')
+			post_data[key] = value
+
+		setattr(self, 'post_data', post_data)
 		setattr(self, 'content_type', 'application/json')
 
 
@@ -37,3 +43,4 @@ c = RDSJsonResponse({
 	]}, 400)
 
 print(c.response_errors)
+print(c.post_data)
