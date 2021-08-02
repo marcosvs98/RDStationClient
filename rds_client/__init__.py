@@ -20,7 +20,6 @@ class RDSJsonResponse():
 
 				self.response_errors.append(
 					(status_code, r['error_type'], int(rd_code), message))
-
 		post_data = {}
 		for data in self.post_data.split("&"):
 			key, value = data.split('=')
