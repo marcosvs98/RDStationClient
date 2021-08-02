@@ -20,13 +20,13 @@ class RDContactsResource(RDStationResource):
 		pass
 
 
-class RDContactsUUID(RDStationResource):
+class RDContactsUUID(RDContactsResource):
 	"""
 	Returns data about a specific Contact per UUID.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	url = "/".join((RDAuthentication.url, "plataform", "contacts"))
+	path = "/".join((RDContactsResource.path, "plataform", "contacts"))
 
 	def __call__(self, uuid, **kwargs):
 		"""
@@ -57,7 +57,7 @@ class RDContactsUUID(RDStationResource):
 		}
 		"""
 		# set uuid
-		RDContactsUUID.url = "/".join((RDAuthentication.url, uuid))
+		RDContactsUUID.url = "/".join((RDContactsUUID.path, uuid))
 		
 		return self._get(self, **kwargs)
 
@@ -65,13 +65,13 @@ class RDContactsUUID(RDStationResource):
 		return self.send_response("GET", **kwargs)
 
 
-class RDContactsEmail(RDStationResource):
+class RDContactsEmail(RDContactsResource):
 	"""
 	Returns data about a specific Contact per E-mail.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	url = "/".join((RDAuthentication.url, "plataform", "contacts"))
+	path = "/".join((RDContactsResource.path, "plataform", "contacts"))
 
 	def __call__(self, email, **kwargs):
 		"""
@@ -102,7 +102,7 @@ class RDContactsEmail(RDStationResource):
 		}
 		"""
 		# set email
-		RDContactsUUID.url = "/".join((RDAuthentication.url, f'email:{email}'))
+		RDContactsEmail.url = "/".join((RDContactsEmail.path, f'email:{email}'))
 
 		return self._get(self, **kwargs)
 
@@ -110,13 +110,13 @@ class RDContactsEmail(RDStationResource):
 		return self.send_response("GET", **kwargs)
 
 
-class RDUpdateContactPerUUID(RDStationResource):
+class RDUpdateContactPerUUID(RDContactsResource):
 	"""
 	Updates the properties of a Contact per UIID.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	path = "/".join((RDAuthentication.path, "plataform", "contacts"))
+	path = "/".join((RDContactsResource.path, "plataform", "contacts"))
 
 	def __call__(self, uuid, body, **kwargs):
 		"""
@@ -148,7 +148,7 @@ class RDUpdateContactPerUUID(RDStationResource):
 		}
 		"""
 		# set email
-		RDContactsUUID.path = "/".join((RDAuthentication.path, uuid))
+		RDUpdateContactPerUUID.path = "/".join((RDUpdateContactPerUUID.path, uuid))
 
 		return self._patch(self, **kwargs)
 
@@ -156,13 +156,13 @@ class RDUpdateContactPerUUID(RDStationResource):
 		return self.send_response("PATCH", **kwargs)
 
 
-class RDUpsertContactIndentifier(RDStationResource):
+class RDUpsertContactIndentifier(RDContactsResource):
 	"""
 	Updates the properties of a Contact per UIID.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	path = "/".join((RDAuthentication.path, "plataform", "contacts"))
+	path = "/".join((RDContactsResource.path, "plataform", "contacts"))
 
 	def __call__(self, identifier, value, **kwargs):
 		"""
@@ -196,7 +196,7 @@ class RDUpsertContactIndentifier(RDStationResource):
 		}
 		"""
 		# set email
-		RDContactsUUID.path = "/".join((RDAuthentication.path, f"{identifier}:{value}"))
+		RDUpsertContactIndentifier.path = "/".join((RDUpsertContactIndentifier.path, f"{identifier}:{value}"))
 
 		return self._pach(self, **kwargs)
 

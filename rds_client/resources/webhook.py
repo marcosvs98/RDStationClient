@@ -95,8 +95,8 @@ class RDWebhooksFactory(RDWebhooksResource):
 		}
 		"""
 		# set email
-		RDWebhooksFactory.path = "/".join((RDWebhooksFactory.url, f'email:{email}'))
-
+		RDWebhooksFactory.path = \
+			"/".join((RDWebhooksFactory.path, f'email:{email}'))
 		return self._post(self, webhook, **kwargs)
 
 	def _post(self, data, **kwargs):
@@ -141,21 +141,21 @@ class RDUpdateWebhookPerUUID(RDWebhooksResource):
 		}
 		"""
 		# set uiid to path
-		RDUpdateWebhookPerUUID.path = "/".join((RDUpdateWebhookPerUUID.path, uuid))
-
+		RDUpdateWebhookPerUUID.path = \
+			"/".join((RDUpdateWebhookPerUUID.path, uuid))
 		return self._put(self, body, **kwargs)
 
 	def _put(self, data, **kwargs):
 		return self.send_response("GET", datra=data, **kwargs)
 
 
-class RDDeleteWebhookPerUUID(RDStationResource):
+class RDDeleteWebhookPerUUID(RDWebhooksResource):
 	"""
 	It updates a webhook subscription.
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	path = "/".join((RDStationResource.path, "webhooks"))
+	path = "/".join((RDWebhooksResource.path, "webhooks"))
 
 	def __call__(self, uuid, **kwargs):
 		"""
@@ -166,8 +166,8 @@ class RDDeleteWebhookPerUUID(RDStationResource):
 		Success | Code: 204
 		"""
 		# set uiid to path
-		RDDeleteWebhookPerUUID.path = "/".join((RDDeleteWebhookPerUUID.path, uuid))
-
+		RDDeleteWebhookPerUUID.path = \
+			"/".join((RDDeleteWebhookPerUUID.path, uuid))
 		return self._delete(self, **kwargs)
 
 	def _detlete(self, data, **kwargs):

@@ -1,10 +1,11 @@
 """ https://developers.rdstation.com/en/overview """
 
 import ssl
-import time
-import json
+import settings
 import logging
 import threading
+from requests import Session
+from dataclasses import dataclass, field
 
 from resources.auth import RDGettingAcessToken
 from resources.auth import RDRevokingAcessToken
@@ -29,6 +30,8 @@ from resources.funnels import RDUpdateContactsDetails
 from resources.event import RDEvent
 from resources.event import RDEventBatch
 
+
+# pylint disable=too-many-function-args
 
 class RDSWebsocketClient():
 	"""
@@ -76,10 +79,8 @@ class RDSWebsocketClient():
 		"""
 		pass
 
-	self.refresh_token = None
 
-
-@dataclasses
+@dataclass
 class RDStationClient:
 	"""
 	Step 1:
@@ -92,26 +93,28 @@ class RDStationClient:
 	client_id      : str
 	access_token   : str
 	client_secret  : str
-	code           : str
-	redirect_url   : str
-	refresh_token  : str
+	#code           : str
+	#redirect_url   : str
+	#refresh_token  : str
 
 
-
-class RDStationRestClient():
+class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 	"""
 	Classe responsável pela implementação de um cliente RDStation
 	ref: https://developers.rdstation.com/en/overview
 	"""
 
-	def __init__(self, api_key, *args, **kwargs):
+	def __init__(self, client , *args, **kwargs):
 
-		self.api_key = api_key
-		self._client = RDStationClient(**kwargs)
+		self.client = client
+		self._websocket = None
 		self._websocket_client = None
+		self._websocket_thread = None
 		self._endpoint = kwargs.get('endpoint', settings.RDSTATION['endpoints']['base_domain'])
 		self._wss_url = kwargs.get('socket', settings.RDSTATION['endpoints']['socket'])
-		self.headers = kwargs.get('headers', settings.RDSTATION['default_headers'])
+		self._headers = kwargs.get('headers', settings.RDSTATION['default_headers'])
+		self.session = Session()
+
 				
 	def login(self):
 		"""
@@ -179,7 +182,7 @@ class RDStationRestClient():
 		"""
 		return "/".join((self._endpoint, resource.path))
 
-	def send_request(self, resource, method, **kwargs):
+	def send_request(self, resource, method, data=None, **kwargs): # pylint: disable=too-many-arguments
 		"""
 		método responsável pelo envio do solicitação do recurso obtido
 		:param resource: Instância de `<rds_client.resources.RDSResource>`.
@@ -188,17 +191,18 @@ class RDStationRestClient():
 		   				
 			:return: `<rds_client.RDSJsonResponse>`.
 		"""
+		logger = logging.getLogger(__name__)
+
 		# get url to of resource
 		url = self.prepare_path(resource)
-
-		response = self.session.request(method=method, url=url, **kwargs)
-
+		response = self.session.request(
+			method=method, url=url, data=data, headers=self._headers, **kwargs
+		)
 		logger.debug(response)
 		logger.debug(response.text)
 		logger.debug(response.headers)
 		logger.debug(response.cookies)
-		response.raise_for_status()
-		return response
+		return response.json()
 
 	@property
 	def websocket(self):
@@ -207,7 +211,7 @@ class RDStationRestClient():
 			:returns: A instância de :class:`Appinit
 		<restservice.resources.appinit.Appinit>`.
 		"""
-		return self.websocket_client.wss
+		return self._websocket_client.wss
 
 	def get_account_info(self):
 		"""
@@ -225,13 +229,13 @@ class RDStationRestClient():
 		"""
 		return RDMarketingTrackingCode(self)
 
-	def get_contacts_by_uiid(self):
+	def get_contacts_by_uiid(self, uuid):
 		"""
 		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
 		<restservice.resources.appinit.Appinit>`.
 		"""
-		return RDContactsUUID(self)
+		return RDContactsUUID(self, uuid)
 
 	def get_contacts_by_email(self):
 		"""
@@ -241,13 +245,13 @@ class RDStationRestClient():
 		"""
 		return RDContactsEmail(self)
 
-	def update_contacts_by_uuid(self):
+	def update_contacts_by_uuid(self, uuid):
 		"""
 		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
 		<restservice.resources.appinit.Appinit>`.
 		"""
-		return RDUpdateContactPerUUID(self)
+		return RDUpdateContactPerUUID(self, uuid)
 
 	def upsert_contact_per_identifier(self, indentifier, value):
 		"""
@@ -264,7 +268,7 @@ class RDStationRestClient():
 			:returns: A instância de :class:`Appinit
 		<restservice.resources.appinit.Appinit>`.
 		"""
-		return RDContactsUUIDDetails(self)
+		return RDContactsUUIDDetails(self, uuid)
 
 	def get_contacts_by_email_funnel(self, email):
 		"""
@@ -280,7 +284,7 @@ class RDStationRestClient():
 			:returns: A instância de :class:`Appinit
 		<restservice.resources.appinit.Appinit>`.
 		"""
-		return RDUpdateContactsDetails(self, identifier, **kwargs)
+		return RDUpdateContactsDetails(self, indentifier, **kwargs)
 
 	# https://developers.rdstation.com/en/reference/fields
 
@@ -340,7 +344,7 @@ class RDStationRestClient():
 			:returns: A instância de :class:`Appinit
 		<restservice.resources.appinit.Appinit>`.
 		"""
-		return RDUpdateWebhookPerUUID(self)
+		return RDUpdateWebhookPerUUID(self, uuid)
 
 	def delete_webhook(self, uuid):
 		"""
@@ -372,61 +376,52 @@ class RDStationRestClient():
 		método responsável por ativar uma conexão com a api da RD Station.
 		"""
 		if not self.acess_token:
-			self.headers['Authorization'] = f'Bearer {self.get_access_token}
+			self.headers['Authorization'] = f"Bearer {self.get_access_token}"
 		pass
+
+	def start_websocket(self):
+		"""
+		Propriedade para obter recurso da IQ Option websocket, obter um canal de velas.
+		:returns: A instância de :class:`GetCandles
+			<restservice.ws.chanels.candles.GetCandles>`.
+		"""
+		self._websocket_client = RDSWebsocketClient(self)
+		self._websocket_thread = threading.Thread(
+			target=self.websocket.run_forever, kwargs={'sslopt': {
+			"check_hostname": False, "cert_reqs": ssl.CERT_NONE,
+			"ca_certs": "cacert.pem"}})  # for fix pyinstall error: cafile, capath and cadata cannot be  omitted
+		self._websocket_thread.daemon = True
+		self._websocket_thread.start()
+		while True:
+			pass
 
 	def close(self):
 		"""
 		método responsável por finalizar uma conexão via websockets.
 			:return:
 		"""
-		self.websocket.close()
-		self.websocket_thread.jon()
+		self._websocket.close()
+		self._websocket_thread.join()  # pylint disable=no-member
 
 	def websocket_alive(self):
 		"""
 	    método responsável por validar a thread de conexão.
 		"""
-		self.websocket_thread.join()
+		self._websocket_thread.join() # pylint disable=no-member
 
-	def __str__(self):
-		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
-		"""
-		pass
-
-	def __repr__(self):
-		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
-		"""
-		pass
-
-	def __enter__(self):
-		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
-		"""
-		pass
-
-	def __exit__(self):
-		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
-		"""
-		pass
-
-	def __delete__(self):
-		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
-		"""
-		pass
 
 # end-of-file
+
+
+# Token público 90b15f9c2c2b3df3076d4239113749f3
+# Token privado e931486421528bb08f0792ed818df9d6
+
+client = RDStationClient(
+	access_token='access_token',
+	client_id='cc3fbf81-3a32-4591-823e-8cf49d2116ab',
+	client_secret='e52fc0ef6053427ca197c35a494f667b'
+)
+
+
+rdclient = RDStationRestClient(client)
+print(rdclient.get_access_token())

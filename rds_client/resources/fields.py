@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from resources.resource import RDStationResource
 
 
-class RDFieldsResource(ABC, RDStationResource):
+class RDFieldsResource(RDStationResource):
 	"""
 	Classe responsável por implementar o recurso de api ´Fields´.
 	"""
@@ -90,8 +90,7 @@ class RDListFields(RDFieldsResource):
 		  ]
 		}
 		"""
-		RDListFields.path = "/".join((RDFieldsResource.path, "fields"))
-
+		RDListFields.path = "/".join((RDListFields.path, "fields"))
 		return self._get(self, **kwargs)
 
 	def _get(self, **kwargs):
@@ -143,7 +142,7 @@ class RDInsertFieldCurrentAccount(RDFieldsResource):
 		}
 		"""
 		RDInsertFieldCurrentAccount.path = \
-			"/".join((RDInsertFieldCurrentAccount.path, "fields")
+			"/".join((RDInsertFieldCurrentAccount.path, "fields"))
 		return self._post(self, fields, **kwargs)
 
 	def _post(self, data, **kwargs):
@@ -198,8 +197,7 @@ class RDUpdateFieldCurrentAccount(RDFieldsResource):
         {}
 		"""
 		RDUpdateFieldCurrentAccount.path = \
-			"/".join((RDUpdateFieldCurrentAccount.path, "fields", uuid)
-
+			"/".join((RDUpdateFieldCurrentAccount.path, "fields", uuid))
 		return self._patch(self, fields, **kwargs)
 
 	def _patch(self, data, **kwargs):
@@ -223,7 +221,6 @@ class RDDeleteFieldCurrentAccount(RDFieldsResource):
 		"""
 		RDDeleteFieldCurrentAccount.path = \
 			"/".join((RDDeleteFieldCurrentAccount.path, f"{uuid}"))
-
 		return self._delete(self, **kwargs)
 
 	def _delete(self, data, **kwargs):

@@ -27,7 +27,7 @@ class RDContactsUUIDDetails(RDFunnelsResource):
 
 	https://developers.rdstation.com/en/reference/contacts/funnels#methodGetByUuidDetails
 	"""
-	path = "/".join((RDFunnelsResource.url, "contacts"))
+	path = "/".join((RDFunnelsResource.path, "contacts"))
 
 	def __call__(self, uuid, funnel_name, **kwargs):
 		"""
@@ -44,8 +44,8 @@ class RDContactsUUIDDetails(RDFunnelsResource):
 		}
 		"""
 		# set uuid
-		RDContactsUUIDDetails.url = "/".join(
-			(RDContactsUUIDDetails.url, uuid, 'funnels', funnel_name)
+		RDContactsUUIDDetails.path = "/".join(
+			(RDContactsUUIDDetails.path, uuid, 'funnels', funnel_name)
 		)
 		return self._get(self, **kwargs)
 
@@ -59,7 +59,7 @@ class RDContactsEmailDetails(RDFunnelsResource):
 
 	https://developers.rdstation.com/en/reference/contacts/funnels#methodGetByUuidDetails
 	"""
-	path = "/".join((RDFunnelsResource.url, "contacts"))
+	path = "/".join((RDFunnelsResource.path, "contacts"))
 
 	def __call__(self, contact_email, funnel_name, **kwargs):
 		"""
@@ -76,9 +76,8 @@ class RDContactsEmailDetails(RDFunnelsResource):
 		}
 		"""
 		# set uuid
-		RDContactsEmailDetails.url = "/".join(
-			(RDContactsEmailDetails.url, f'email:{contact_email}', 'funnels', funnel_name)
-		)
+		RDContactsEmailDetails.path = "/".join(
+			(RDContactsEmailDetails.path, f'email:{contact_email}', 'funnels', funnel_name))
 		return self._get(self, **kwargs)
 
 	def _get(self, **kwargs):
@@ -91,7 +90,7 @@ class RDUpdateContactsDetails(RDFunnelsResource):
 
 	ref: https://developers.rdstation.com/en/reference/contacts
 	"""
-	path = "/".join((RDFunnelsResource.url, "contacts"))
+	path = "/".join((RDFunnelsResource.path, "contacts"))
 
 	def __call__(self, lifecycle_stage, opportunity,  contact_owner_email, **kwargs):
 		"""
@@ -111,8 +110,8 @@ class RDUpdateContactsDetails(RDFunnelsResource):
 		}
 		"""
 		# set email
-		RDUpdateContactsDetails.url = "/".join(
-			(RDUpdateContactsDetails.url, uuid, f"|email:{contact_owner_email}", "funnels", funnel_name)
+		RDUpdateContactsDetails.path = "/".join(
+			(RDUpdateContactsDetails.path, uuid, f"|email:{contact_owner_email}", "funnels", funnel_name)
 		)
 		data = {
 		    "lifecycle_stage": lifecycle_stage,

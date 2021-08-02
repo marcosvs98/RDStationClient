@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from resources.resource import RDStationResource
 
-class RDAuthenticationResource(ABC, RDStationResource):
+class RDAuthenticationResource(RDStationResource):
 	"""
 	In RD Station, eliminated OAuth and API Keys authentication methods.
 	ref: https://api.rd.services/auth/token
@@ -22,7 +22,9 @@ class RDGettingAcessToken(RDAuthenticationResource):
 	ref: https://developers.rdstation.com/en/authentication#methodGetDetails
 	"""
 
-	def __call__(self, client_id, client_secret, code, **kwargs):
+	path = "/".join((RDAuthenticationResource.path, "token"))
+
+	def __call__(self, **kwargs):
 		"""
 		:param client_id: type: String Cliente
 		:param client_secret: type: String Secret of client
@@ -43,14 +45,15 @@ class RDGettingAcessToken(RDAuthenticationResource):
 		}
 		"""
 		data = {
-			"client_id": client_id,
-			"client_secret": client_secret,
-			"code": code
+			"client_id": self.client.client.client_id,
+			"client_secret": self.client.client.client_secret,
+			#"code": self.client.client.code
 		}
-		return self._post(self, data, **kwargs)
+		return self._post(data=data, **kwargs)
 
 	def _post(self, data, **kwargs):
-		return self.send_response("POST", data=data, **kwargs)
+		return self.send_request(method="POST", data=data, **kwargs)
+
 
 
 class RDRefreshExpiredToken(RDAuthenticationResource):
@@ -58,7 +61,7 @@ class RDRefreshExpiredToken(RDAuthenticationResource):
 	Every access_token is temporary, and its expiration time is defined by
 	the expires_in attribute in seconds, which is 86400 seconds (24 hours).
 	"""
-	path = "/".join((RDAuthentication.path, "revoke"))
+	path = "/".join((RDAuthenticationResource.path, "revoke"))
 
 	def __call__(self, client_id, client_secret, refresh_token, **kwargs):
 		"""

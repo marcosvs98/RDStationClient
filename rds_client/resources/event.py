@@ -1,13 +1,12 @@
 
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 from resources.resource import RDStationResource
 
-class RDEventResource(ABC, RDStationResource):
-	"""
-		The event's endpoint is responsible for receiving different event
-		types in which RD Station Contacts take part in.
-		"""
-	path = "/".join((RDFieldsResource.path, "plataform"))
+class RDEventResource(RDStationResource):
+	""" The event's endpoint is responsible for receiving different event
+	types in which RD Station Contacts take part in. """
+
+	path = "plataform"
 
 	@abstractmethod
 	def __call__(self):
@@ -146,6 +145,5 @@ class RDEventBatch(RDEventResource):
 
 	def _post(self, data, **kwargs):
 		return self.send_response("POST", data=data, **kwargs)
-
 
 # end-of-file

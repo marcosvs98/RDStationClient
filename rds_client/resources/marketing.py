@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from resources.resource import RDStationResource
 
 
-class RDMarketingResource(ABC, RDStationResource):
+class RDMarketingResource(RDStationResource):
 	"""
 	Classe responsável por implementar o recurso de api ´Marketing´.
 	"""

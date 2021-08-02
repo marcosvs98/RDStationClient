@@ -1,7 +1,7 @@
 from abc import ABC
 
 
-class RDStationResource(ABC):
+class RDStationResource(object):
 	"""
 	Classe responsável por implementar uma Abstract Factory.
 	"""
@@ -12,7 +12,7 @@ class RDStationResource(ABC):
 		"""
 		self.client = client
 
-	def send_request(self, method, *args, **kwargs):
-		return self.client.send_request(self, method, *args, **kwargs)
+	def send_request(self, method, data=None, *args, **kwargs):
+		return self.client.send_request(self, method, data=data, *args, **kwargs)
 
 # end-of-file
