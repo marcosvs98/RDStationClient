@@ -1,3 +1,5 @@
+""" https://developers.rdstation.com/en/overview """
+
 import ssl
 import time
 import json
