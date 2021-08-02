@@ -403,11 +403,17 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 # Token público 90b15f9c2c2b3df3076d4239113749f3
 # Token privado e931486421528bb08f0792ed818df9d6
 
-client = RDStationClient(
-	access_token='access_token',
-	client_id='cc3fbf81-3a32-4591-823e-8cf49d2116ab',
-	client_secret='e52fc0ef6053427ca197c35a494f667b'
-)
+#client = RDStationClient(
+#	access_token='access_token',
+#	client_id='cc3fbf81-3a32-4591-823e-8cf49d2116ab',
+#	client_secret='e52fc0ef6053427ca197c35a494f667b'
+#)
+
+client = RDStationClient(**{
+  "access_token": 'access_token',
+  "client_id": "049bf777-bbbb-0000-9e09-7ebe2972b8b0",
+  "client_secret": "952e14d9dbad9c28d2247da9a19645d8",
+})
 
 
 rdclient = RDStationRestClient(client)

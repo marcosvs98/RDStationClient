@@ -2,7 +2,7 @@ import json
 
 class RDSJsonResponse():
 
-	def __init__(self, json_response, safe=False):
+	def __init__(self, json_response, status_code, raise_status=False, safe=False):
 
 		if safe and isinstance(json_response, dict):
 			raise TypeError(
@@ -14,10 +14,14 @@ class RDSJsonResponse():
 			setattr(self, key, value)
 		setattr(self, 'content_type', 'application/json')
 
+		self.response_errors = []
 
 		if self.errors:
-			pass
+			for r in self.errors:
+				rd_code, message = r['error_message'].split(': ')
 
+				self.response_errors.append(
+					(status_code, r['error_type'], int(rd_code), message))
 
 
 c = RDSJsonResponse({
@@ -29,6 +33,7 @@ c = RDSJsonResponse({
 			'error_type': 'BAD_REQUEST',
 			'error_message': "822: unexpected token at 'client_id=cc3fbf81-3a32-4591-823e-8cf49d2116ab&client_secret=e52fc0ef6053427ca197c35a494f667b'",
 			'error_class': 'ActionDispatch::Http::Parameters::ParseError'
-				}]})
+				},
+	]}, 400)
 
-print(c.request_method)
+print(c.response_errors)
