@@ -9,10 +9,8 @@ class RDSJsonResponse():
 				'In order to allow non-dict objects to be serialized set the '
 				'safe parameter to False.'
 			)
-
 		for key, value in json_response.items():
 			setattr(self, key, value)
-		setattr(self, 'content_type', 'application/json')
 
 		self.response_errors = []
 
@@ -22,6 +20,8 @@ class RDSJsonResponse():
 
 				self.response_errors.append(
 					(status_code, r['error_type'], int(rd_code), message))
+
+		setattr(self, 'content_type', 'application/json')
 
 
 c = RDSJsonResponse({
