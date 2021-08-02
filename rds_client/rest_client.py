@@ -83,27 +83,21 @@ class RDSWebsocketClient():
 @dataclass
 class RDStationClient:
 	"""
-	Step 1:
-		Criar um aplicativo na RD Station App Store
-		link: https://appstore.rdstation.com/en/publisher
-
 	Classe responsável pela implementação de um cliente RDStation
-	ref: https://developers.rdstation.com/en/overview
-	"""
+	ref: https://developers.rdstation.com/en/overview """
+
 	client_id      : str
 	access_token   : str
 	client_secret  : str
-	#code           : str
-	#redirect_url   : str
-	#refresh_token  : str
+	code           : str
+	redirect_url   : str
+	refresh_token  : str
 
 
 class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
-	"""
-	Classe responsável pela implementação de um cliente RDStation
-	ref: https://developers.rdstation.com/en/overview
-	"""
-
+	""" Class responsible for implementing an RDStation client
+	ref: https://developers.rdstation.com/en/overview """
+	
 	def __init__(self, client , *args, **kwargs):
 
 		self.client = client
@@ -115,36 +109,28 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		self._headers = kwargs.get('headers', settings.RDSTATION['default_headers'])
 		self.session = Session()
 
-				
-	def login(self):
-		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
-		"""
-		pass
-
+	@property
 	def get_lead(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		pass
 
 	def update_lead(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		pass
 
 	def create_app(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		pass
 
@@ -158,17 +144,17 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def refresh_token(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDRefreshExpiredToken(self)
 
 	def revoke_access_token(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDRevokingAcessToken(self)
 
@@ -207,9 +193,9 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 	@property
 	def websocket(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return self._websocket_client.wss
 
@@ -217,72 +203,72 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		Returns the account name from your RD Station Marketing account.
 
-			<restservice.resources.appinit.Appinit>`.
+			<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDMarketingAccountInfo(self)
 
 	def get_tracking_code(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDMarketingTrackingCode(self)
 
 	def get_contacts_by_uiid(self, uuid):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDContactsUUID(self, uuid)
 
 	def get_contacts_by_email(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDContactsEmail(self)
 
 	def update_contacts_by_uuid(self, uuid):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDUpdateContactPerUUID(self, uuid)
 
 	def upsert_contact_per_identifier(self, indentifier, value):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDUpsertContactIndentifier(self, indentifier, value)
 
 
 	def get_contacts_by_uuid_funnel(self, uuid):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDContactsUUIDDetails(self, uuid)
 
 	def get_contacts_by_email_funnel(self, email):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDContactsEmailDetails(self, email)
 
 	def update_contact_by_indetifier_funnel(self, indentifier, **kwargs):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDUpdateContactsDetails(self, indentifier, **kwargs)
 
@@ -290,33 +276,33 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def get_fields(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDListFields(self)
 
 	def insert_field(self, body):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDInsertFieldCurrentAccount(self, body)
 
 	def update_field(self, body):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDUpdateFieldCurrentAccount(self, body)
 
 	def delete_field(self, body):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDDeleteFieldCurrentAccount(self, body)
 
@@ -324,50 +310,50 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def receive_webhook(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDDWebhooksReceiver(self)
 
 	def create_webhook(self, body):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDWebhooksFactory(self, body)
 
 	def update_webhook_by_uuid(self, uuid):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDUpdateWebhookPerUUID(self, uuid)
 
 	def delete_webhook(self, uuid):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDDeleteWebhookPerUUID(self, uuid)
 
 	# https://developers.rdstation.com/en/reference/events
 	def create_event(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.event.RDEvent>`.
 		"""
 		return RDEvent(self)
 
 	def create_event_batch(self):
 		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
+		<rds_client.resources.event.RDEventBatch>`.
 		"""
 		return RDEventBatch(self)
 
@@ -381,9 +367,9 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def start_websocket(self):
 		"""
-		Propriedade para obter recurso da IQ Option websocket, obter um canal de velas.
+		Propriedade para obter recurso da RD Station websocket, obter um canal de velas.
 		:returns: A instância de :class:`GetCandles
-			<restservice.ws.chanels.candles.GetCandles>`.
+			<rds_client.ws.chanels.candles.GetCandles>`.
 		"""
 		self._websocket_client = RDSWebsocketClient(self)
 		self._websocket_thread = threading.Thread(
@@ -412,7 +398,6 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 # end-of-file
 
-
 # Token público 90b15f9c2c2b3df3076d4239113749f3
 # Token privado e931486421528bb08f0792ed818df9d6
 
@@ -425,3 +410,5 @@ client = RDStationClient(
 
 rdclient = RDStationRestClient(client)
 print(rdclient.get_access_token())
+
+# end-of-file
