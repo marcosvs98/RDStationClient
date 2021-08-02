@@ -26,6 +26,8 @@ from resources.marketing import RDMarketingTrackingCode
 from resources.funnels import RDContactsUUIDDetails
 from resources.funnels import RDContactsEmailDetails
 from resources.funnels import RDUpdateContactsDetails
+from resources.event import RDEvent
+from resources.event import RDEventBatch
 
 from exceptions import RDStationException
 from exceptions import RDUserIsNotExists
@@ -185,13 +187,6 @@ class RDStationRestClient():
 		"""
 		return RDRevokingAcessToken(self)
 
-	def conversion_identifier(self):
-		"""
-		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<restservice.resources.appinit.Appinit>`.
-		"""
-		pass
 
 	def prepare_path(self, resource):
 		"""
@@ -374,13 +369,21 @@ class RDStationRestClient():
 		return RDDeleteWebhookPerUUID(self, uuid)
 
 	# https://developers.rdstation.com/en/reference/events
-	def get_events(self):
+	def create_event(self):
 		"""
 		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`Appinit
 		<restservice.resources.appinit.Appinit>`.
 		"""
-		pass
+		return RDEvent(self)
+
+	def create_event_batch(self):
+		"""
+		Propriedade para obter recursos da IQ Option, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<restservice.resources.appinit.Appinit>`.
+		"""
+		return RDEventBatch(self)
 
 	def connect(self):
 		"""
