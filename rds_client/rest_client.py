@@ -29,24 +29,6 @@ from resources.funnels import RDUpdateContactsDetails
 from resources.event import RDEvent
 from resources.event import RDEventBatch
 
-from exceptions import RDStationException
-from exceptions import RDUserIsNotExists
-from exceptions import RDUnauthorizedRequest
-from exceptions import RDForbiddenResponse
-from exceptions import RDPermissionDenied
-from exceptions import RDExpiredCodeGrant
-from exceptions import RDInvalidrefreshToken
-from exceptions import RDResourceNotFound
-from exceptions import RDUnsupportedMediaType
-from exceptions import RDMalformedBodyRequest
-from exceptions import RDInvalidFormat
-from exceptions import RDUpperCaseTagsException
-from exceptions import RDInvalidDataType
-from exceptions import RDReadOnlyFieldsException
-from exceptions import RDInexistentFields
-from exceptions import RDConflictingField
-from exceptions import RDEmailAlreadyInUse
-
 
 class RDSWebsocketClient():
 	"""
