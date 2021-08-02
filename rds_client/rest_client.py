@@ -4,7 +4,7 @@ import ssl
 import settings
 import logging
 import threading
-from socket import websocket
+#from socket import websocket
 from requests import Session
 from dataclasses import dataclass, field
 
@@ -90,9 +90,9 @@ class RDStationClient:
 	client_id      : str
 	access_token   : str
 	client_secret  : str
-	code           : str
-	redirect_url   : str
-	refresh_token  : str
+	#code           : str
+	#redirect_url   : str
+	#refresh_token  : str
 
 
 class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
