@@ -1,8 +1,5 @@
 class RDStationException(Exception):
-	"""
-	ref: https://developers.rdstation.com/en/error-states
-	"""
-	pass
+	""" ref: https://developers.rdstation.com/en/error-states """
 
 
 class RDUnauthorizedRequest(RDStationException):
@@ -36,94 +33,74 @@ class RDInvalidrefreshToken(RDStationException):
 
 
 class RDResourceNotFound(RDStationException):
-	"""
-	If the resource does not exist in RD Station Status 404 not found.
-	"""
+	""" If the resource does not exist in RD Station Status 404 not found. """
 
 	def __init__(self, msg):
 		super(RDResourceNotFound, self).__init__(msg, status=404)
 
 
 class RDUnsupportedMediaType(RDStationException):
-	"""
-	If the Content-Type is not set properly Status 415 Unsupported Media Type.
-	"""
+	""" If the Content-Type is not set properly Status 415 Unsupported Media Type. """
 
 	def __init__(self, msg):
 		super(RDUnsupportedMediaType, self).__init__(msg, status=415)
 
 
 class RDMalformedBodyRequest(RDStationException):
-	"""
-	If the body request is malformed accordingly to the Content-Type
-	header Status 400 Bad Request.
-	"""
+	""" If the body request is malformed accordingly to the Content-Type
+	header Status 400 Bad Request. """
 
 	def __init__(self, msg):
 		super(RDMalformedBodyRequest, self).__init__(msg, status=400)
 
 
 class RDInvalidFormat(RDStationException):
-	"""
-	If an invalid format for an attribute is sent Status 400 Bad Request.
-	"""
+	""" If an invalid format for an attribute is sent Status 400 Bad Request. """
 
 	def __init__(self, msg):
 		super(RDMalformedBodyRequest, self).__init__(msg, status=400)
 
 
 class RDUpperCaseTagsException(RDStationException):
-	"""
-	If the tags contain uppercase characters:
-	"""
+	""" If the tags contain uppercase characters: """
 
 	def __init__(self, msg):
 		super(RDUpperCaseTagsException, self).__init__(msg, status=400)
 
 
 class RDInvalidDataType(RDStationException):
-	"""
-	If an invalid data type is sent Status 422 Unprocessable Entity.
-	"""
+	""" If an invalid data type is sent Status 422 Unprocessable Entity. """
 
 	def __init__(self, msg):
 		super(RDInvalidDataType, self).__init__(msg, status=422)
 
 
 class RDReadOnlyFieldsException(RDStationException):
-	"""
-	When trying to update a read only attribute Status 400 Bad Request.
-	"""
+	""" When trying to update a read only attribute Status 400 Bad Request. """
 
 	def __init__(self, msg):
 		super(RDReadOnlyFieldsException, self).__init__(msg, status=400)
 
 
 class RDInexistentFields(RDStationException):
-	"""
-	When trying to update an attribute that does not exist Status 400 Bad Request.
-	"""
+	""" When trying to update an attribute that does not exist Status 400 Bad Request. """
 
 	def __init__(self, msg):
 		super(RDInexistentFields, self).__init__(msg, status=400)
 
 
 class RDConflictingField(RDStationException):
-	"""
-	When using the UPSERT like PATCH endpoint, and a field that was
+	""" When using the UPSERT like PATCH endpoint, and a field that was
 	used  to identify the lead appears again in the request payload
-	Status 400 Bad Request.
-	"""
+	Status 400 Bad Request. """
 
 	def __init__(self, msg):
 		super(RDInexistentFields, self).__init__(msg, status=400)
 
 
 class RDEmailAlreadyInUse(RDStationException):
-	"""
-	When using the PATCH by uuid Contact endpoint and an e-mail
-	that already is used Status 400 Bad Request.
-	"""
+	""" When using the PATCH by uuid Contact endpoint and an e-mail
+	that already is used Status 400 Bad Request. """
 
 	def __init__(self, msg):
 		super(RDEmailAlreadyInUse, self).__init__(msg, status=400)
