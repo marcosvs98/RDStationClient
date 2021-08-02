@@ -4,6 +4,7 @@ import ssl
 import settings
 import logging
 import threading
+from socket import websocket
 from requests import Session
 from dataclasses import dataclass, field
 
@@ -183,7 +184,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		url = self.prepare_path(resource)
 		response = self.session.request(
 			method=method, url=url, data=data, headers=self._headers, **kwargs
-		)
+		) # pylint disable=bad-continuation
 		logger.debug(response)
 		logger.debug(response.text)
 		logger.debug(response.headers)
@@ -375,7 +376,8 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		self._websocket_thread = threading.Thread(
 			target=self.websocket.run_forever, kwargs={'sslopt': {
 			"check_hostname": False, "cert_reqs": ssl.CERT_NONE,
-			"ca_certs": "cacert.pem"}})  # for fix pyinstall error: cafile, capath and cadata cannot be  omitted
+			"ca_certs": "cacert.pem"}}) # pylint disable=bad-continuation
+		# for fix pyinstall error: cafile, capath and cadata cannot be  omitted
 		self._websocket_thread.daemon = True
 		self._websocket_thread.start()
 		while True:
