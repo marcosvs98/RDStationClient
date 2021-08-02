@@ -93,10 +93,10 @@ class RDMarkOpportunityEvent(RDRequestBody):
 	def __init__(self):
 		super(RDMarkOpportunityEvent).__init__()
 
-	event_type: str  # req: true
-	event_family: str  # req: true
-	funnel_name: str  # req: true
-	email: str  # req: true
+	event_type: str
+	event_family: str
+	funnel_name: str
+	email: str
 	value: float = field(default=None)
 
 
@@ -108,10 +108,10 @@ class RDMarkOpportunityLostEvent(RDRequestBody):
 	def __init__(self):
 		super(RDMarkOpportunityLostEvent).__init__()
 
-	event_type: str  # req: true
-	event_family: str  # req: true
-	email: str  # req: true
-	funnel_name: str  # req: true
+	event_type: str
+	event_family: str
+	email: str
+	funnel_name: str
 	reason: str = field(default=None)
 
 
@@ -125,15 +125,15 @@ class RDPlacedOrderEvent(RDRequestBody):
 	def __init__(self):
 		super(RDPlacedOrderEvent).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
+	event_tye: str
+	event_family: str
 	name: str = field(default=None)
-	email: str  # req: true
-	cf_order_id: str  # req: true
-	cf_order_total_items: int  # req: true
-	cf_order_status: str  # req: true
-	cf_order_payment_method: str  # req: true
-	cf_order_payment_amount: float  # req: true
+	email: str
+	cf_order_id: str
+	cf_order_total_items: int
+	cf_order_status: str
+	cf_order_payment_method: str
+	cf_order_payment_amount: float
 	legal_bases: list = field(default=[])
 
 
@@ -147,13 +147,13 @@ class RDPlacedOrderEventWithItem(RDRequestBody):
 	def __init__(self):
 		super(RDPlacedOrderEventWithItem).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
+	event_tye: str
+	event_family: str
 	name: str = field(default=None)
-	email: str  # req: true
-	cf_order_id: str  # req: true
-	cf_order_product_id: str  # req: true
-	cf_order_product_sku: str  # req: true
+	email: str
+	cf_order_id: str
+	cf_order_product_id: str
+	cf_order_product_sku: str
 	legal_bases: list = field(default=[])
 
 
@@ -167,13 +167,13 @@ class RDAbandonedCartEvent(RDRequestBody):
 	def __init__(self):
 		super(RDAbandonedCartEvent).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
+	event_tye: str
+	event_family: str
 	name: str = field(default=None)
-	email: str  # req: true
-	cf_cart_id: str  # req: true
-	cf_cart_total_items: int  # req: true
-	cf_cart_status: str  # req: true
+	email: str
+	cf_cart_id: str
+	cf_cart_total_items: int
+	cf_cart_status: str
 	legal_bases: list = field(default=[])
 
 
@@ -187,13 +187,13 @@ class RDAbandonedCartEventWithItem(RDRequestBody):
 	def __init__(self):
 		super(RDAbandonedCartEventWithItem).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
+	event_tye: str
+	event_family: str
 	name: str = field(default=None)
-	email: str  # req: true
-	cf_cart_id: str  # req: true
-	cf_cart_total_items: int  # req: true
-	cf_cart_status: str  # req: true
+	email: str
+	cf_cart_id: str
+	cf_cart_total_items: int
+	cf_cart_status: str
 	legal_bases: list = field(default=[])
 
 
@@ -206,15 +206,15 @@ class RDChatStartedEvent(RDRequestBody):
 	def __init__(self):
 		super(RDChatStartedEvent).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
-	chat_subject: str  # req: true
-	cf_chat_status: str  # req: true
+	event_tye: str
+	event_family: str
+	chat_subject: str
+	cf_chat_status: str
 	cf_chat_type: str = field(default=None)
 	cf_birthdate: str = field(default=None)
 	cf_gender: str = field(default=None)
 	name: str = field(default=None)
-	email: str  # req: true
+	email: str
 	job_title: str = field(default=None)
 	personal_phone: str = field(default=None)
 	mobile_phone: str = field(default=None)
@@ -236,16 +236,16 @@ class RDChatFinishedEvent(RDRequestBody):
 	def __init__(self):
 		super(RDChatFinishedEvent).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
-	chat_subject: str  # req: true
-	cf_chat_status: str  # req: true
-	cf_chat_transcript_message: str  # req: true
+	event_tye: str
+	event_family: str
+	chat_subject: str
+	cf_chat_status: str
+	cf_chat_transcript_message: str
 	cf_chat_type: str = field(default=None)
 	cf_birthdate: str = field(default=None)
 	cf_gender: str = field(default=None)
 	name: str = field(default=None)
-	email: str  # req: true
+	email: str
 	job_title: str = field(default=None)
 	personal_phone: str = field(default=None)
 	mobile_phone: str = field(default=None)
@@ -267,20 +267,20 @@ class RDCallFinishedEvent(RDRequestBody):
 	def __init__(self):
 		super(RDCallFinishedEvent).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
+	event_tye: str
+	event_family: str
 	name: str = field(default=None)
-	email: str  # req: true
+	email: str
 	company_name: str = field(default=None)
 	company_site: str = field(default=None)
 	job_title: str = field(default=None)
 	personal_phone: str = field(default=None)
 	call_user_email: str = field(default=None)
-	call_from_number: str  # req: true
+	call_from_number: str
 	call_started_at: int = field(default=0)
 	call_duration: str = field(default=None)
 	call_type: str = field(default=None)
-	call_status: str  # req: true
+	call_status: str
 	call_status_description: str = field(default=None)
 	call_phone_type: str = field(default=None)
 	call_carrier: str = field(default=None)
@@ -297,9 +297,9 @@ class RDMediaEvents(RDRequestBody):
 	def __init__(self):
 		super(RDMediaEvents).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
-	email: str  # req: true
+	event_tye: str
+	event_family: str
+	email: str
 	name: str = field(default=None)
 	company_name: str = field(default=None)
 	company_site: str = field(default=None)
@@ -310,10 +310,10 @@ class RDMediaEvents(RDRequestBody):
 	facebook: str = field(default=None)
 	linkedin: str = field(default=None)
 	website: str = field(default=None)
-	media_type: str  # req: true
+	media_type: str
 	media_metadata: str = field(default=None)
 	media_recorded_content: bool = field(default=False)
-	media_identifier: str  # req: true
+	media_identifier: str
 	media_category: str = field(default=None)
 	media_duration: int = field(default=0)
 	media_published_date_timestamp: int = field(default=0)
@@ -329,9 +329,9 @@ class RDMediaPlaybackStoppedEvent(RDRequestBody):
 	def __init__(self):
 		super(RDMediaPlaybackStoppedEvent).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
-	email: str  # req: true
+	event_tye: str
+	event_family: str
+	email: str
 	name: str = field(default=None)
 	company_name: str = field(default=None)
 	company_site: str = field(default=None)
@@ -342,10 +342,10 @@ class RDMediaPlaybackStoppedEvent(RDRequestBody):
 	facebook: str = field(default=None)
 	linkedin: str = field(default=None)
 	website: str = field(default=None)
-	media_type: str  # req: true
+	media_type: str
 	media_metadata: str = field(default=None)
 	media_recorded_content: bool = field(default=False)
-	media_identifier: str  # req: true
+	media_identifier: str
 	media_category: str = field(default=None)
 	media_duration: int = field(default=0)
 	media_published_date_timestamp: int = field(default=0)
@@ -365,9 +365,9 @@ class RDEventsBatch(RDRequestBody):
 	def __init__(self):
 		super(RDEventsBatch).__init__()
 
-	event_tye: str  # req: true
-	event_family: str  # req: true
-	payload: object  # req: true
+	event_tye: str
+	event_family: str
+	payload: object
 
 
 # end-of-file
