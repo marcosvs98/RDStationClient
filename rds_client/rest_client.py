@@ -36,9 +36,10 @@ from resources.event import RDEventBatch
 
 @dataclass
 class RDStationClient:
-	"""Classe responsável pela implementação de um cliente RDStation
-	ref: https://developers.rdstation.com/en/overview """
-
+	"""
+	Classe responsável pela implementação de um cliente RDStation
+	ref: https://developers.rdstation.com/en/overview
+	"""
 	client_id: str
 	client_secret: str
 	access_token: str = field(default=None)
@@ -49,8 +50,10 @@ class RDStationClient:
 # pylint disable=too-many-public-methods
 
 class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
-	""" Class responsible for implementing an RDStation client
-	ref: https://developers.rdstation.com/en/overview """
+	"""
+	Class responsible for implementing an RDStation client
+	ref: https://developers.rdstation.com/en/overview
+	"""
 
 	def __init__(self, client, **kwargs):
 		self.client = client
@@ -155,7 +158,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`RDContactsResource
-		<rds_client.resources.appinit.RDUpdateContactPerUUID>`.
+		<rds_client.resources.contacts.RDUpdateContactPerUUID>`.
 		"""
 		return RDUpdateContactPerUUID(self, uuid)
 
@@ -163,7 +166,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
 			:returns: A instância de :class:`RDContactsResource
-		<rds_client.resources.appinit.RDUpsertContactIndentifier>`.
+		<rds_client.resources.contacts.RDUpsertContactIndentifier>`.
 		"""
 		return RDUpsertContactIndentifier(self, indentifier, value)
 
