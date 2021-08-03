@@ -46,6 +46,7 @@ class RDUnsupportedMediaType(RDStationException):
 		super(RDUnsupportedMediaType, self).__init__(msg, status=415)
 
 
+
 class RDMalformedBodyRequest(RDStationException):
 	""" If the body request is malformed accordingly to the Content-Type
 	header Status 400 Bad Request. """
@@ -107,3 +108,4 @@ class RDEmailAlreadyInUse(RDStationException):
 
 
 # end-of-file
+

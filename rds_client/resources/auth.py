@@ -47,7 +47,7 @@ class RDGettingAcessToken(RDAuthenticationResource):
 		data = {
 			"client_id": self.client.client.client_id,
 			"client_secret": self.client.client.client_secret,
-			#"code": self.client.client.code
+			"code": self.client.client.code
 		}
 		return self._post(data=data, **kwargs)
 

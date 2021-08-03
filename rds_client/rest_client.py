@@ -1,10 +1,11 @@
 """ https://developers.rdstation.com/en/overview """
 
 import ssl
+import json
+import time
 import settings
 import logging
 import threading
-#from socket import websocket
 from requests import Session
 from dataclasses import dataclass, field
 
@@ -34,52 +35,6 @@ from resources.event import RDEventBatch
 
 # pylint disable=too-many-function-args
 
-class RDSWebsocketClient():
-	"""
-	Classe responsável pela implementação de um cliente RDStation
-	ref: https://developers.rdstation.com/en/overview
-	"""
-	def __init__(self, client):
-		"""
-		:param api: The instance of :class:`RDStationRestClient
-            <rds.api.RDStationRestClient>`.
-		"""
-		self.client = client
-		self.wss = websocket.WebSocketApp(
-			self.client.wss_url, on_message=self.on_message,
-			on_error=self.on_error, on_close=self.on_close,
-			on_open=self.on_open
-		)
-
-	def on_message(self, message):
-		"""
-		Classe responsável pela implementação de um cliente RDStation
-		ref: https://developers.rdstation.com/en/overview
-		"""
-		pass
-
-	@staticmethod
-	def on_error(wss, error):
-		"""
-		Classe responsável pela implementação de um cliente RDStation
-		ref: https://developers.rdstation.com/en/overview
-		"""
-		pass
-
-	@staticmethod
-	def on_open(wss):
-		"""
-		method to process websocket open.
-		"""
-		pass
-
-	@staticmethod
-	def on_close(wss):
-		"""
-		Method to process websocket close.
-		"""
-		pass
-
 
 @dataclass
 class RDStationClient:
@@ -106,37 +61,51 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		self._websocket_client = None
 		self._websocket_thread = None
 		self._endpoint = kwargs.get('endpoint', settings.RDSTATION['endpoints']['base_domain'])
-		self._wss_url = kwargs.get('socket', settings.RDSTATION['endpoints']['socket'])
+		self.wss_url = kwargs.get('socket', settings.RDSTATION['endpoints']['socket'])
 		self._headers = kwargs.get('headers', settings.RDSTATION['default_headers'])
 		self.session = Session()
-
-	@property
-	def get_lead(self):
-		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<rds_client.resources.appinit.Appinit>`.
-		"""
-		pass
-
-	def update_lead(self):
-		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<rds_client.resources.appinit.Appinit>`.
-		"""
-		pass
-
-	def create_app(self):
-		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<rds_client.resources.appinit.Appinit>`.
-		"""
-		pass
+		self._access_token = None
+		self._expires = None
+		self._refresh_token = None
 
 	@property
 	def get_access_token(self):
+		"""
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<rds_client.resources.appinit.Appinit>`.
+		"""
+		return self._access_token
+
+	@property
+	def get_refresh_token(self):
+		"""
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<rds_client.resources.appinit.Appinit>`.
+		"""
+		return self._refresh_token
+
+	@property
+	def get_expires_in(self):
+		"""
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<rds_client.resources.appinit.Appinit>`.
+		"""
+		return self._expires
+
+	@property
+	def get_headers(self):
+		"""
+		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
+			:returns: A instância de :class:`Appinit
+		<rds_client.resources.appinit.Appinit>`.
+		"""
+		return self._headers
+
+	@property
+	def access_token(self):
 		"""
 		Propriedade responsável por implementar um recurso de obtenção de token
 			´<rds_clinet.resources.auth.RDGettingAcessToken>`.
@@ -158,7 +127,6 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDRevokingAcessToken(self)
-
 
 	def prepare_path(self, resource):
 		"""
@@ -183,22 +151,14 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		# get url to of resource
 		url = self.prepare_path(resource)
 		response = self.session.request(
-			method=method, url=url, data=data, headers=self._headers, **kwargs
+			method=method, url=url, data=json.dumps(data), headers=self._headers, **kwargs
 		) # pylint disable=bad-continuation
 		logger.debug(response)
 		logger.debug(response.text)
 		logger.debug(response.headers)
 		logger.debug(response.cookies)
-		return response.json()
 
-	@property
-	def websocket(self):
-		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
-		<rds_client.resources.appinit.Appinit>`.
-		"""
-		return self._websocket_client.wss
+		return response.json()
 
 	def get_account_info(self):
 		"""
@@ -248,7 +208,6 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		return RDUpsertContactIndentifier(self, indentifier, value)
 
-
 	def get_contacts_by_uuid_funnel(self, uuid):
 		"""
 		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
@@ -272,8 +231,6 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		<rds_client.resources.appinit.Appinit>`.
 		"""
 		return RDUpdateContactsDetails(self, indentifier, **kwargs)
-
-	# https://developers.rdstation.com/en/reference/fields
 
 	def get_fields(self):
 		"""
@@ -361,27 +318,40 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 	def connect(self):
 		"""
 		método responsável por ativar uma conexão com a api da RD Station.
-		"""
-		if not self.acess_token:
-			self.headers['Authorization'] = f"Bearer {self.get_access_token}"
-		pass
-
-	def start_websocket(self):
-		"""
-		Propriedade para obter recurso da RD Station websocket, obter um canal de velas.
 		:returns: A instância de :class:`GetCandles
 			<rds_client.ws.chanels.candles.GetCandles>`.
 		"""
-		self._websocket_client = RDSWebsocketClient(self)
-		self._websocket_thread = threading.Thread(
-			target=self.websocket.run_forever, kwargs={'sslopt': {
-			"check_hostname": False, "cert_reqs": ssl.CERT_NONE,
-			"ca_certs": "cacert.pem"}}) # pylint disable=bad-continuation
-		# for fix pyinstall error: cafile, capath and cadata cannot be  omitted
-		self._websocket_thread.daemon = True
-		self._websocket_thread.start()
+		if not self._access_token:
+			data = self.access_token()
+			try:
+				self._access_token = data['access_token']
+				self._expires = data['expires_in']
+				self._refresh_token = data['refresh_token']
+				self._headers['Authorization'] = f"Bearer {self._refresh_token}"
+			except KeyError as e:
+				return
+
+		logger = logging.getLogger(__name__)
+		logger.debug(f"access-token: {self._access_token}")
+		logger.debug(f"refresh-token: {self._refresh_token}")
+		logger.debug(f"expire-in: {self._expires}")
+		self._access_token = self._refresh_token
+
+	def run(self):
+		"""
+		método responsável por ativar uma conexão com a api da RD Station.
+			:returns: A instância de :class:`GetCandles
+		<rds_client.ws.chanels.candles.GetCandles>`.
+		"""
+		logger = logging.getLogger(__name__)
 		while True:
-			pass
+			try:
+				self.connect()
+				self._expires -= 1
+				time.sleep(1)
+			except KeyboardInterrupt:
+				logger.warning('CTRL+C Detected!')
+				break
 
 	def close(self):
 		"""
@@ -397,26 +367,62 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		self._websocket_thread.join() # pylint disable=no-member
 
+	def __enter__(self):
+		self.conect()
+		return self
+
+	def __exit__(self, exc_type, exc_val, exc_tb):
+		if exc_val:
+			log.warning(f'exc_type: {exc_type}')
+			log.warning(f'exc_value: {exc_val}')
+			log.warning(f'exc_traceback: {exc_tb}')
+
+	def __repr__(self):
+		return (f'RDStation ('
+				f'refresh-token={self._refresh_token[0:10]}.., '
+				f'expire-in={self._expires})')
 
 # end-of-file
 
-# Token público 90b15f9c2c2b3df3076d4239113749f3
-# Token privado e931486421528bb08f0792ed818df9d6
 
-#client = RDStationClient(
-#	access_token='access_token',
-#	client_id='cc3fbf81-3a32-4591-823e-8cf49d2116ab',
-#	client_secret='e52fc0ef6053427ca197c35a494f667b'
-#)
+def main():
+	import sys
+	import time
+	from types import SimpleNamespace		
 
-client = RDStationClient(**{
-  "access_token": 'access_token',
-  "client_id": "049bf777-bbbb-0000-9e09-7ebe2972b8b0",
-  "client_secret": "952e14d9dbad9c28d2247da9a19645d8",
-})
+	l = {
+		'format'   : f'[%(asctime)s.%(msecs)03d]'
+					 f'[PID-%(process)s]'
+					 f'[%(threadName)s]'
+					 f'[%(module)s:%(funcName)s:%(lineno)d]'
+					 f'[%(name)s:%(levelname)s]'
+					 f''
+					 f': %(message)s',
+		'datefmt'  : '%Y-%m-%d %H:%M:%S',
+		'level'    : logging.DEBUG,
+		'stream'   : sys.stderr
+	}
+
+	logging.basicConfig(**l)
+
+	client = SimpleNamespace(**{
+		"client_id": "cc3fbf81-3a32-4591-823e-8cf49d2116ab",
+		"client_secret": "e52fc0ef6053427ca197c35a494f667b",
+		"code": "d7f28b82b9296f81207875429bbae99b",
+		"redirect_uri": "https://github.com/MarcosVs98/"
+	})
+	rdclient = RDStationRestClient(client)
+	rdclient.connect()
+	#while True:
+	#	rdclient.connect()
+	#	time.sleep(5)
+	rdclient.run()
+	#print(rdclient.get_access_token)
+	#print(rdclient.get_refresh_token)
+	#print(rdclient.get_expires_in)
 
 
-rdclient = RDStationRestClient(client)
-print(rdclient.get_access_token())
+if __name__ == '__main__':
+	main()
 
 # end-of-file
