@@ -353,7 +353,6 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 				logger.warning('CTRL+C Detected!')
 				break
 
-
 	def __enter__(self):
 		self.conect()
 		return self
