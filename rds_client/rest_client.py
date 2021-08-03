@@ -353,19 +353,6 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 				logger.warning('CTRL+C Detected!')
 				break
 
-	def close(self):
-		"""
-		método responsável por finalizar uma conexão via websockets.
-			:return:
-		"""
-		self._websocket.close()
-		self._websocket_thread.join()  # pylint disable=no-member
-
-	def websocket_alive(self):
-		"""
-	    método responsável por validar a thread de conexão.
-		"""
-		self._websocket_thread.join() # pylint disable=no-member
 
 	def __enter__(self):
 		self.conect()
