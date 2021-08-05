@@ -117,6 +117,7 @@ class RDUpdateWebhookPerUUID(RDWebhooksResource):
 		:body: type: dict : Request Body Default Parameters
 		:param kwargs: type: dict args
 		:return: json response
+
 		{
 		  "name": "RD Station Developer",
 		  "email": "contact@example.com",
