@@ -6,11 +6,11 @@ class RDWebhooksResource(RDStationResource):
 	"""
 	Webhooks provide the ability to receive real-time data updates about your contact activity.
 
-	Choose to receive data based on certain actions, re-cast or marked as an opportunity,
-	and have all applicable data sent to a URL of your choice. You can then use your own
-	custom application to read, save, and do actions with that data. This is a powerful option
-	that allows you to keep all your data in sync and opens the
-	 possibility for all types of integration.
+	Choose to receive data based on certain actions, re-cast or marked as an opportunity,and
+	have all applicable data sent to a URL of your choice. You can then use your own custom
+	application to read, save, and do actions with that data. This is a powerful option that
+	allows you to keep all your data in sync and opens the possibility for all types
+	of integration.
 
 	ref: https://developers.rdstation.com/en/reference/webhooks
 	"""

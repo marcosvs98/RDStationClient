@@ -1,5 +1,3 @@
-
-
 RDSTATION = {
 	# https://developers.rdstation.com/en/reference/webhooks#webhooks-retries
 	"endpoints": {

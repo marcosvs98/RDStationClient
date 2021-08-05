@@ -3,12 +3,12 @@ from abc import ABC
 
 class RDStationResource(object):
 	"""
-	Classe responsável por implementar uma Abstract Factory.
+	Class responsible for implementing an Abstract Factory.
 	"""
 	def __init__(self, client):
 		"""
-		:param api: The instance of :class:`IQOptionAPI
-		<iqoptionapi.api.IQOptionAPI>`.
+		:param api: The instance of :class:`RDStationClient
+		<rest_client.resource.RDStationResource>`.
 		"""
 		self.client = client
 

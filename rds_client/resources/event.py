@@ -1,6 +1,6 @@
-
 from abc import ABC, abstractmethod
 from resources.resource import RDStationResource
+
 
 class RDEventResource(RDStationResource):
 	""" The event's endpoint is responsible for receiving different event
@@ -79,7 +79,6 @@ class RDEvent(RDEventResource):
 		return self.send_response("POST", data=data, **kwargs)
 
 
-
 class RDEventBatch(RDEventResource):
 	"""
 	The events batch endpoint allows RD Station to receive more than one
@@ -145,5 +144,6 @@ class RDEventBatch(RDEventResource):
 
 	def _post(self, data, **kwargs):
 		return self.send_response("POST", data=data, **kwargs)
+
 
 # end-of-file
