@@ -36,10 +36,9 @@ from resources.event import RDEventBatch
 
 @dataclass
 class RDStationClient:
-	"""
-	Classe responsável pela implementação de um cliente RDStation
-	ref: https://developers.rdstation.com/en/overview
-	"""
+	""" Class responsible for implementing input parameters for api.
+	ref: https://developers.rdstation.com/en/overview """
+
 	client_id: str
 	client_secret: str
 	access_token: str = field(default=None)
@@ -50,10 +49,8 @@ class RDStationClient:
 # pylint disable=too-many-public-methods
 
 class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
-	"""
-	Class responsible for implementing an RDStation client
-	ref: https://developers.rdstation.com/en/overview
-	"""
+	"""Class responsible for implementing an RDStation API client.
+	ref: https://developers.rdstation.com/en/overview """
 
 	def __init__(self, client, **kwargs):
 		self.client = client
@@ -67,41 +64,41 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 	@property
 	def access_token(self):
 		"""
-		propriedade responsável por implementar um recurso de obtenção de token
-			:returns: A instância de :class:`RDAuthenticationResource
+		property responsible for implementing a token retrieval feature.
+			:returns: the instance of :class:`RDAuthenticationResource
 		<rds_clinet.resources.auth.RDGettingAcessToken>`.
 		"""
 		return RDGettingAcessToken(self)
 
 	def refresh_token(self):
 		"""
-		método para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDAuthenticationResource
+		método para obter recursos da estação RD, refresh access token.
+			:returns: the instance of :class:`RDAuthenticationResource
 		<rds_client.resources.auth.RDRefreshExpiredToken>`.
 		"""
 		return RDRefreshExpiredToken(self)
 
 	def revoke_access_token(self):
 		"""
-		método para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDAuthenticationResource
+		method to get resources from RD Station, revoke access token.
+			:returns: the instance of :class:`RDAuthenticationResource
 		<rds_client.resources.auth.RDRevokingAcessToken>`.
 		"""
 		return RDRevokingAcessToken(self)
 
 	def prepare_path(self, resource):
 		"""
-		método responsável pela construção da url com base no recurso solicitado
+		method responsible for constructing the url based on the requested resource
 
-		:param resource: Instância de `<rds_client.resources.RDSResource>`.
-		:return: O url completo.
+		:param resource: instance of `<rds_client.resources.RDSResource>`.
+		:return: the complete url.
 		"""
 		return "/".join((self._endpoint, resource.path))
 
 	def send_request(self, resource, method, data=None, **kwargs): # pylint: disable=too-many-arguments
 		"""
-		método responsável pelo envio do solicitação do recurso obtido
-		:param resource: Instância de `<rds_client.resources.RDSResource>`.
+		method responsible for sending resource request processing.
+		:param resource: instance of `<rds_client.resources.RDSResource>`.
 		:param method: http method
 		:param kwargs: others params
 
@@ -124,104 +121,104 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def get_account_info(self):
 		"""
-		returns the account name from your RD Station Marketing account.
-			:returns: A instância de :class:`RDMarketingResource
+		method to returns the account name from your RD Station Marketing account.
+			:returns: the instance of :class:`RDMarketingResource
 		<rds_client.resources.marketing.RDMarketingAccountInfo>`.
 		"""
 		return RDMarketingAccountInfo(self)
 
 	def get_tracking_code(self):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDMarketingResource
+		method to obtain resource from RD Station, tracking code.
+			:returns: the instance of :class:`RDMarketingResource
 		<rds_client.resources.marketing.RDMarketingTrackingCode>`.
 		"""
 		return RDMarketingTrackingCode(self)
 
 	def get_contacts_by_uiid(self, uuid):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDContactsResource
+		method to obtain resource from RD Station, get contact per uuid.
+			:returns: the instance of :class:`RDContactsResource
 		<rds_client.resources.contacts.RDContactsUUID>`.
 		"""
 		return RDContactsUUID(self, uuid)
 
 	def get_contacts_by_email(self):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDContactsResource
+		method to obtain resource from RD Station, get contact per email.
+			:returns: the instance of :class:`RDContactsResource
 		<rds_client.resources.contacts.RDContactsEmail>`.
 		"""
 		return RDContactsEmail(self)
 
 	def update_contacts_by_uuid(self, uuid):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDContactsResource
+		method to obtain resource from RD Station, update contact per uuid.
+			:returns: the instance of :class:`RDContactsResource
 		<rds_client.resources.contacts.RDUpdateContactPerUUID>`.
 		"""
 		return RDUpdateContactPerUUID(self, uuid)
 
 	def upsert_contact_per_identifier(self, indentifier, value):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDContactsResource
+		method to obtain resource from RD Station, update and insert contact per indetifier.
+			:returns: the instance of :class:`RDContactsResource
 		<rds_client.resources.contacts.RDUpsertContactIndentifier>`.
 		"""
 		return RDUpsertContactIndentifier(self, indentifier, value)
 
 	def get_contacts_by_uuid_funnel(self, uuid):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDFunnelsResource
+		method to obtain resource from RD Station, get contact per uuid.
+			:returns: the instance of :class:`RDFunnelsResource
 		<rds_client.resources.funnels.RDContactsUUIDDetails>`.
 		"""
 		return RDContactsUUIDDetails(self, uuid)
 
 	def get_contacts_by_email_funnel(self, email):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDFunnelsResource
+		method to obtain resource from RD Station, get contact per email.
+			:returns: the instance of :class:`RDFunnelsResource
 		<rds_client.resources.funnels.RDContactsEmailDetails>`.
 		"""
 		return RDContactsEmailDetails(self, email)
 
 	def update_contact_by_indetifier_funnel(self, indentifier, **kwargs):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDFunnelsResource
+		method to obtain resource from RD Station, update contacty by indetifier.
+			:returns: the instance of :class:`RDFunnelsResource
 		<rds_client.resources.funnels.RDUpdateContactsDetails>`.
 		"""
 		return RDUpdateContactsDetails(self, indentifier, **kwargs)
 
 	def get_fields(self):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDFieldsResource
+		method to obtain resource from RD Station, get field.
+			:returns: the instance of :class:`RDFieldsResource
 		<rds_client.resources.fields.RDListFields>`.
 		"""
 		return RDListFields(self)
 
 	def insert_field(self, body):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDFieldsResource
+		method to obtain resource from RD Station, insert a new field.
+			:returns: the instance of :class:`RDFieldsResource
 		<rds_client.resources.fields.RDInsertFieldCurrentAccount>`.
 		"""
 		return RDInsertFieldCurrentAccount(self, body)
 
 	def update_field(self, body):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDFieldsResource
+		method to obtain resource from RD Station, update field.
+			:returns: the instance of :class:`RDFieldsResource
 		<rds_client.resources.fields.RDUpdateFieldCurrentAccount>`.
 		"""
 		return RDUpdateFieldCurrentAccount(self, body)
 
 	def delete_field(self, body):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDFieldsResource
+		method to obtain resource from RD Station, delete field.
+			:returns: the instance of :class:`RDFieldsResource
 		<rds_client.resources.fields.RDDeleteFieldCurrentAccount>`.
 		"""
 		return RDDeleteFieldCurrentAccount(self, body)
@@ -230,56 +227,56 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def receive_webhook(self):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDWebhooksResource
+		method to obtain resource from RD Station, retrieve a webhook.
+			:returns: the instance of :class:`RDWebhooksResource
 		<rds_client.resources.webhook.RDDWebhooksReceiver>`.
 		"""
 		return RDDWebhooksReceiver(self)
 
 	def create_webhook(self, body):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDWebhooksResource
+		method to obtain resource from RD Station, create a new webhook.
+			:returns: the instance of :class:`RDWebhooksResource
 		<rds_client.resources.webhook.RDWebhooksFactory>`.
 		"""
 		return RDWebhooksFactory(self, body)
 
 	def update_webhook_by_uuid(self, uuid):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDWebhooksResource
+		method to obtain resource from RD Station, update webhook per uuid.
+			:returns: the instance of :class:`RDWebhooksResource
 		<rds_client.resources.webhook.RDUpdateWebhookPerUUID>`.
 		"""
 		return RDUpdateWebhookPerUUID(self, uuid)
 
 	def delete_webhook(self, uuid):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`RDWebhooksResource
-		<rds_client.resources.webhook.Appinit>`.
+		method to obtain resource from RD Station, delete webhook.
+			:returns: the instance of :class:`RDWebhooksResource
+		<rds_client.resources.webhook.RDDeleteWebhookPerUUID>`.
 		"""
 		return RDDeleteWebhookPerUUID(self, uuid)
 
 	# https://developers.rdstation.com/en/reference/events
 	def create_event(self):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
+		method to get creation resource for RD Station default event.
+			:returns: the instance of :class:`Appinit
 		<rds_client.resources.event.RDEvent>`.
 		"""
 		return RDEvent(self)
 
 	def create_event_batch(self):
 		"""
-		Propriedade para obter recursos da RD Station, recurso de inicialização do aplicativo.
-			:returns: A instância de :class:`Appinit
+		method to get creation resource for RD Station batch event.
+			:returns: the instance of :class:`RDEventBatch
 		<rds_client.resources.event.RDEventBatch>`.
 		"""
 		return RDEventBatch(self)
 
 	def connect(self):
 		"""
-		método responsável por ativar uma conexão com a api da RD Station.
+		method responsible for activating a connection with the RD Station api.
 			<rds_client.RDStationClient.connect>`.
 		"""
 		if not self._access_token:
@@ -300,8 +297,8 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def run(self):
 		"""
-		método responsável por ativar uma conexão com a api da RD Station.
-			<rds_client.RDStationClient.connect>`.
+		method responsible for starting a running service with the RD Station api.
+			<rds_client.RDStationClient.run>`.
 		"""
 		logger = logging.getLogger(__name__)
 		while True:
@@ -315,22 +312,22 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	@property
 	def get_access_token(self):
-		""" Propriedade para obter token de acesso atual. """
+		""" property to get current access token. """
 		return self._access_token
 
 	@property
 	def get_refresh_token(self):
-		""" Propriedade para obter refresh token de acesso atual. """
+		""" property to get current access token refresh. """
 		return self._refresh_token
 
 	@property
 	def get_expires_in(self):
-		""" Propriedade para obter o expire token atual """
+		""" property to get current expire token """
 		return self._expires
 
 	@property
 	def get_headers(self):
-		""" Obter os headers atuais da sessão http"""
+		""" get the current http session headers """
 		return self._headers
 
 	def __enter__(self):
