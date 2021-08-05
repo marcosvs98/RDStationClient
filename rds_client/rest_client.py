@@ -33,6 +33,8 @@ from resources.event import RDEventBatch
 
 # pylint disable=too-many-function-args
 
+LOG = logging.getLogger(__name__)
+
 
 @dataclass
 class RDStationClient:
@@ -104,18 +106,16 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 			:return: `<rds_client.RDSJsonResponse>`.
 		"""
-		logger = logging.getLogger(__name__)
-
 		# get url to of resource
 		url = self.prepare_path(resource)
 		# pylint disable=bad-continuation
-		response = self.session.request(method=method, url=url,
-			data=json.dumps(data), headers=self._headers, **kwargs)
+		response = self.session.request(method=method, url=url, \
+				data=json.dumps(data), headers=self._headers, **kwargs)
 		# pylint disable=bad-continuation
-		logger.debug(response)
-		logger.debug(response.text)
-		logger.debug(response.headers)
-		logger.debug(response.cookies)
+		LOG.debug(response)
+		LOG.debug(response.text)
+		LOG.debug(response.headers)
+		LOG.debug(response.cookies)
 
 		return response.json()
 
@@ -288,11 +288,9 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 				self._headers['Authorization'] = f"Bearer {self._refresh_token}"
 			except KeyError:
 				return
-
-		logger = logging.getLogger(__name__)
-		logger.debug(f"access-token: {self._access_token}")
-		logger.debug(f"refresh-token: {self._refresh_token}")
-		logger.debug(f"expire-in: {self._expires}")
+		LOG.debug(f"access-token: {self._access_token}")
+		LOG.debug(f"refresh-token: {self._refresh_token}")
+		LOG.debug(f"expire-in: {self._expires}")
 		self._access_token = self._refresh_token
 
 	def run(self):
@@ -300,14 +298,13 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		method responsible for starting a running service with the RD Station api.
 			<rds_client.RDStationClient.run>`.
 		"""
-		logger = logging.getLogger(__name__)
 		while True:
 			try:
 				self.connect()
-				self._expires -= 1
 				time.sleep(1)
+				self._expires -= 1
 			except KeyboardInterrupt:
-				logger.warning('CTRL+C Detected!')
+				LOG.warning('CTRL+C Detected!')
 				break
 
 	@property
@@ -336,10 +333,9 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 	def __exit__(self, exc_type, exc_val, exc_tb):
 		if exc_val:
-			logger = logging.getLogger(__name__)
-			logger.warning(f'exc_type: {exc_type}')
-			logger.warning(f'exc_value: {exc_val}')
-			logger.warning(f'exc_traceback: {exc_tb}')
+			LOG.warning(f'exc_type: {exc_type}')
+			LOG.warning(f'exc_value: {exc_val}')
+			LOG.warning(f'exc_traceback: {exc_tb}')
 
 	def __repr__(self):
 		# pylint disable=bad-continuation
