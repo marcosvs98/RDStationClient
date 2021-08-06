@@ -26,7 +26,7 @@ def main():
 	client = SimpleNamespace(**{
 		"client_id": "cc3fbf81-3a32-4591-823e-8cf49d2116ab",
 		"client_secret": "e52fc0ef6053427ca197c35a494f667b",
-		"code": "b195210be81df23d1b9b3f312fbb7555",
+		"code": "5f0c41c289910b9d3d8b2a1a169af92e",
 		"redirect_uri": "https://github.com/MarcosVs98/"
 	})
 	rdclient = RDStationRestClient(client)
@@ -42,6 +42,9 @@ def main():
 
 if __name__ == '__main__':
 	main()
+
+	#message = 'Wrong credentials provided'.split(': ')
+	#print(message)
 
 
 
