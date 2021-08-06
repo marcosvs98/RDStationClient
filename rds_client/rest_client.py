@@ -7,6 +7,8 @@ from dataclasses import dataclass, field
 from requests import Session
 
 import settings
+from resources.event import RDEvent
+from resources.event import RDEventBatch
 from resources.auth import RDGettingAcessToken
 from resources.auth import RDRevokingAcessToken
 from resources.auth import RDRefreshExpiredToken
@@ -27,8 +29,6 @@ from resources.marketing import RDMarketingTrackingCode
 from resources.funnels import RDContactsUUIDDetails
 from resources.funnels import RDContactsEmailDetails
 from resources.funnels import RDUpdateContactsDetails
-from resources.event import RDEvent
-from resources.event import RDEventBatch
 
 
 # pylint disable=too-many-function-args
@@ -72,6 +72,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		return RDGettingAcessToken(self)
 
+	@property
 	def refresh_token(self):
 		"""
 		método para obter recursos da estação RD, refresh access token.
@@ -80,6 +81,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		return RDRefreshExpiredToken(self)
 
+	@property
 	def revoke_access_token(self):
 		"""
 		method to get resources from RD Station, revoke access token.
@@ -119,6 +121,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 
 		return response.json()
 
+	@property
 	def get_account_info(self):
 		"""
 		method to returns the account name from your RD Station Marketing account.
@@ -127,6 +130,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		"""
 		return RDMarketingAccountInfo(self)
 
+	@property
 	def get_tracking_code(self):
 		"""
 		method to obtain resource from RD Station, tracking code.

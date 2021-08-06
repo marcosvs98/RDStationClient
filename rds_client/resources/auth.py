@@ -8,6 +8,9 @@ class RDAuthenticationResource(RDStationResource):
 	"""
 	path = 'auth'
 
+	def __init__(self, client):
+		super(RDAuthenticationResource, self).__init__(client)
+
 	@abstractmethod
 	def __call__(self):
 		pass
@@ -129,7 +132,6 @@ class RDRevokingAcessToken(RDAuthenticationResource):
 
 	def _post(self, data, **kwargs):
 		return self.send_response("POST", data=data, **kwargs)
-
 
 
 # end-of-file

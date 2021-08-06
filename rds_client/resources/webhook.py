@@ -16,6 +16,9 @@ class RDWebhooksResource(RDStationResource):
 	"""
 	path = 'integrations'
 
+	def __init__(self, client):
+		super(RDWebhooksResource, self).__init__(client)
+
 	@abstractmethod
 	def __call__(self):
 		pass

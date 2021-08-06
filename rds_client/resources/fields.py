@@ -8,6 +8,9 @@ class RDFieldsResource(RDStationResource):
 	"""
 	path = 'platoform'
 
+	def __init__(self, client):
+		super(RDEventResource, self).__init__(client)
+
 	@abstractmethod
 	def __call__(self):
 		pass

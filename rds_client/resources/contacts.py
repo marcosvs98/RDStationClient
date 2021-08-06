@@ -15,6 +15,9 @@ class RDContactsResource(RDStationResource):
 	"""
 	path = 'plataform'
 
+	def __init__(self, client):
+		super(RDContactsResource, self).__init__(client)
+
 	@abstractmethod
 	def __call__(self):
 		pass

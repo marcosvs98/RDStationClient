@@ -8,6 +8,9 @@ class RDMarketingResource(RDStationResource):
 	"""
 	path = 'marketing'
 
+	def __init__(self, client):
+		super(RDMarketingResource, self).__init__(client)
+
 	@abstractmethod
 	def __call__(self):
 		pass
