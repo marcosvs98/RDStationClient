@@ -143,26 +143,6 @@ HTTP_EXCEPTIONS = {
 
 
 RD_STATION_EXCEPTIONS = {
-
-	'Order would trigger immediately.': InvalidOrder,
-	'Account has insufficient balance for requested action.': InsufficientFunds,
-	'Rest API trading is not enabled.': ExchangeNotAvailable,
-	"You don't have permission.": PermissionDenied,  # {"msg":"You don't have permission.","success":false}
-	'Market is closed.': ExchangeNotAvailable,  # {"code":-1013,"msg":"Market is closed."}
-	'-1000': ExchangeNotAvailable,  # {"code":-1000,"msg":"An unknown error occured while processing the request."}
-	'-1001': ExchangeNotAvailable,  # 'Internal error; unable to process your request. Please try again.'
-	'-1002': AuthenticationError,  # 'You are not authorized to execute self request.'
-	'-1003': RateLimitExceeded,
-	# {"code":-1003,"msg":"Too much request weight used, current limit is 1200 request weight per 1 MINUTE. Please use the websocket for live updates to avoid polling the API."}
-	'-1013': InvalidOrder,  # createOrder -> 'invalid quantity'/'invalid price'/MIN_NOTIONAL
-	'-1015': RateLimitExceeded,  # 'Too many new orders; current limit is %s orders per %s.'
-	'-1016': ExchangeNotAvailable,  # 'This service is no longer available.',
-	'-1020': BadRequest,  # 'This operation is not supported.'
-	'-1021': InvalidNonce,  # 'your time is ahead of server'
-	'-1022': AuthenticationError,  # {"code":-1022,"msg":"Signature for self request is not valid."}
-	'-1100': BadRequest,  # createOrder(symbol, 1, asdf) -> 'Illegal characters found in parameter 'price'
-	'-1101': BadRequest,  # Too many parameters; expected %s and received %s.
-	'-1102': BadRequest,  # Param %s or %s must be sent, but both were empty
 	'-1103': BadRequest,  # An unknown parameter was sent.
 	'-1104': BadRequest,  # Not all sent parameters were read, read 8 parameters but was sent 9
 	'-1105': BadRequest,  # Parameter %s was empty.
@@ -171,29 +151,7 @@ RD_STATION_EXCEPTIONS = {
 	'-1112': InvalidOrder,  # No orders on book for symbol.
 	'-1114': BadRequest,  # TimeInForce parameter sent when not required.
 	'-1115': BadRequest,  # Invalid timeInForce.
-	'-1116': BadRequest,  # Invalid orderType.
-	'-1117': BadRequest,  # Invalid side.
-	'-1118': BadRequest,  # New client order ID was empty.
-	'-1119': BadRequest,  # Original client order ID was empty.
-	'-1120': BadRequest,  # Invalid interval.
-	'-1121': BadSymbol,  # Invalid symbol.
-	'-1125': AuthenticationError,  # This listenKey does not exist.
-	'-1127': BadRequest,  # More than %s hours between startTime and endTime.
-	'-1128': BadRequest,  # {"code":-1128,"msg":"Combination of optional parameters invalid."}
-	'-1130': BadRequest,  # Data sent for paramter %s is not valid.
-	'-1131': BadRequest,  # recvWindow must be less than 60000
-	'-2010': ExchangeError,
-	# generic error code for createOrder -> 'Account has insufficient balance for requested action.', {"code":-2010,"msg":"Rest API trading is not enabled."}, etc...
-	'-2011': OrderNotFound,  # cancelOrder(1, 'BTC/USDT') -> 'UNKNOWN_ORDER'
-	'-2013': OrderNotFound,  # fetchOrder(1, 'BTC/USDT') -> 'Order does not exist'
-	'-2014': AuthenticationError,  # {"code":-2014, "msg": "API-key format invalid."}
-	'-2015': AuthenticationError,  # "Invalid API-key, IP, or permissions for action."
-	'-3005': InsufficientFunds,
-	# {"code":-3005,"msg":"Transferring out not allowed. Transfer out amount exceeds max amount."}
-	'-3008': InsufficientFunds,
-	# {"code":-3008,"msg":"Borrow not allowed. Your borrow amount has exceed maximum borrow amount."}
-	'-3010': ExchangeError,  # {"code":-3010,"msg":"Repay not allowed. Repay amount exceeds borrow amount."}
-	'-3022': AccountSuspended,  # You account's trading is banned.
+
 },
 
 
