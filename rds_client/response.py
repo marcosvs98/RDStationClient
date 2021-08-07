@@ -70,7 +70,7 @@ class RDSResponse():
 				exceptions.append(
 					self.throw_exactly_matched_exception(
 						r['error_type'], r['error_message']))
-			raise Exceptions(exceptions)
+			raise RDStationException(exceptions)
 		try:
 			post_data = {}
 			for data in self.post_data.split("&"):
