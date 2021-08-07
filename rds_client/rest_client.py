@@ -6,7 +6,7 @@ import logging
 from dataclasses import dataclass, field
 from requests import Session
 
-import settings
+from response import RDSResponse
 from resources.event import RDEvent
 from resources.event import RDEventBatch
 from resources.auth import RDGettingAcessToken
@@ -119,7 +119,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		LOG.debug(response.headers)
 		LOG.debug(response.cookies)
 
-		return response.json()
+		return RDSResponse(response)
 
 	@property
 	def get_account_info(self):

@@ -42,12 +42,12 @@ RDS_CLIENT_EXCEPTIONS = {
     "TOO_SHORT": RDValidationRelatedException,
     "TOO_LONG": RDValidationRelatedException,
     "EXCLUSION": RDValidationRelatedException,
-    "INCLUSION": RDValidationRelatedException,
+    "INCLUSION": RDValidationRelatedException
 }
 
 
 class RDSResponse():
-	""" ."""
+	""" RD Station Response."""
 
 	def __init__(self, response, raise_status=False, safe=False):
 
