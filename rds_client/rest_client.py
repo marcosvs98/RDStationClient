@@ -6,6 +6,7 @@ import logging
 from dataclasses import dataclass, field
 from requests import Session
 
+import settings
 from response import RDSResponse
 from resources.event import RDEvent
 from resources.event import RDEventBatch
@@ -58,7 +59,7 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 		self.client = client
 		self.session = Session()
 		self._access_token = None
-		self._expires = None
+		self._expires = 0
 		self._refresh_token = None
 		self._endpoint = kwargs.get('endpoint', settings.RDSTATION['endpoints']['base_domain'])
 		self._headers = kwargs.get('headers', settings.RDSTATION['default_headers'])
@@ -290,8 +291,9 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 				self._expires = data['expires_in']
 				self._refresh_token = data['refresh_token']
 				self._headers['Authorization'] = f"Bearer {self._refresh_token}"
-			except KeyError:
+			except (KeyError, TypeError):
 				return
+		self._expires =- 1
 		LOG.debug(f"access-token: {self._access_token}")
 		LOG.debug(f"refresh-token: {self._refresh_token}")
 		LOG.debug(f"expire-in: {self._expires}")
@@ -306,7 +308,6 @@ class RDStationRestClient():  # pylint: disable=too-many-instance-attributes
 			try:
 				self.connect()
 				time.sleep(1)
-				self._expires -= 1
 			except KeyboardInterrupt:
 				LOG.warning('CTRL+C Detected!')
 				break

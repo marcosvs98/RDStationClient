@@ -49,7 +49,7 @@ RDS_CLIENT_EXCEPTIONS = {
 class RDSResponse():
 	""" RD Station Response."""
 
-	def __init__(self, response, raise_status=False, safe=False):
+	def __init__(self, response, raise_status=True, safe=False):
 
 		json_response = response.json()
 		exceptions = []
@@ -70,7 +70,8 @@ class RDSResponse():
 				exceptions.append(
 					self.throw_exactly_matched_exception(
 						r['error_type'], r['error_message']))
-			raise RDStationException(exceptions)
+			if raise_status:
+				raise RDStationException(exceptions)
 		try:
 			post_data = {}
 			for data in self.post_data.split("&"):
