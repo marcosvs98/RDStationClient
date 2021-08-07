@@ -78,8 +78,8 @@ class RDSResponse():
 				post_data[key] = value
 		except AttributeError:
 			post_data = ''
-
-		setattr(self, 'post_data', post_data)
+		finally:
+			setattr(self, 'post_data', post_data)
 
 	def throw_exactly_matched_exception(self, error_type, error_message):
 		exception = RDS_CLIENT_EXCEPTIONS.get(error_type, RDStationException)
