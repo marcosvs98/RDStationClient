@@ -6,7 +6,7 @@ class RDStationResource(object):
 	def __init__(self, client):
 		"""
 		:param api: The instance of :class:`RDStationClient
-		<rest_client.resource.RDStationResource>`.
+		<rds_client.resources.RDStationResource>`.
 		"""
 		self.client = client
 

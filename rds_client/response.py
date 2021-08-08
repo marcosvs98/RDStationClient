@@ -1,5 +1,3 @@
-import json
-
 from exceptions import RDStationException
 from exceptions import RDUnauthorizedRequest
 from exceptions import RDForbiddenRequest

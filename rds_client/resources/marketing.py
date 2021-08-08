@@ -4,7 +4,7 @@ from resources.resource import RDStationResource
 
 class RDMarketingResource(RDStationResource):
 	"""
-	Classe responsável por implementar o recurso de api ´Marketing´.
+	Class responsible for implementing the ´Marketing´ api resource.
 	"""
 	path = 'marketing'
 

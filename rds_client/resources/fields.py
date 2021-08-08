@@ -4,7 +4,7 @@ from resources.resource import RDStationResource
 
 class RDFieldsResource(RDStationResource):
 	"""
-	Classe responsável por implementar o recurso de api ´Fields´.
+	Class responsible for implementing the ´Fields´ api feature.
 	"""
 	path = 'platoform'
 
