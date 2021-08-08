@@ -58,8 +58,8 @@ class RDSResponse():
 		if safe and isinstance(response.json(), dict):
 			raise TypeError(
 				'In order to allow non-dict objects to be serialized set the '
-				'safe parameter to False.')
-
+				'safe parameter to False.'
+			)
 		for key, value in json_response.items():
 			setattr(self, key, value)
 
