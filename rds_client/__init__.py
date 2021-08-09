@@ -5,6 +5,14 @@ from types import SimpleNamespace
 from rest_client import RDStationRestClient, RDStationClient
 
 def main():
+	event = RDMarkOpportunityEvent(event_type='adada', event_family='adadad', funnel_name='adadad', email='adjabdio')
+	print(event['event_type'])
+
+	print(event.event_type)
+
+	print(event.update({'test': 'adada'}))
+
+	print(event)
 
 	l = {
 		'format'   : f'[%(asctime)s.%(msecs)03d]'
