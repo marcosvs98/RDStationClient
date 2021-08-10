@@ -143,6 +143,4 @@ requests.get('https://app.rdstation.com.br/api/platform/auth', headers={
   'content-type': 'application/json',
   'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36',
   'referer': 'https://app.rdstation.com.br/api/platform/auth?client_id=cc3fbf81-3a32-4591-823e-8cf49d2116ab&redirect_uri=https://github.com/MarcosVs98/'})
-
-
 '''
